@@ -48,10 +48,10 @@ Rails.application.configure do
   # `Rails.application.secrets.[domain_name, email_username, email_password]`は
   # `config/secrets.yml`で定義される (このとき環境変数を読み込むべき)
   config.action_mailer.smtp_settings = {
-      address: "smtp.gmail.com",
-      port: 587,
+      address: Rails.application.secrets.smtp_adress,
+      port: Rails.application.secrets.smtp_port,
       domain: Rails.application.secrets.domain_name,
-      authentication: "plain",
+      authentication: Rails.application.secrets.smtp_auth,
       enable_starttls_auto: true,
       user_name: Rails.application.secrets.email_username,
       password: Rails.application.secrets.email_password
