@@ -52,11 +52,10 @@ Rails.application.configure do
       port: Rails.application.secrets.smtp_port,
       domain: Rails.application.secrets.domain_name,
       authentication: Rails.application.secrets.smtp_auth,
+      tls: Rails.application.secrets.smtp_tls,
       enable_starttls_auto: true,
       user_name: Rails.application.secrets.email_username,
-      password: Rails.application.secrets.email_password,
-      authentication: :login,
-      tls: true
+      password: Rails.application.secrets.email_password
     }
     # ActionMailer Config
     config.action_mailer.default_url_options = { :host => 'localhost:3000' }
