@@ -30,18 +30,30 @@ class Ability
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
     #
 
-    user ||= User.new # guest user (not logged in)
-    can :read, ActiveAdmin::Page, :name => "Dashboard" # default permission, Dashboardは読める
+    # user ||= User.new # guest user (not logged in)
+    # cannot :manage, :all # まず全権限を無しに
+    # can :read, ActiveAdmin::Page, :name => "Dashboard" # for test, Dashboardは読める
 
-    if user.role.id = 1 then # for developer
+    # if user.role.id = 1 then # for developer
+    #   can :manage, :all
+    # end
+    # if user.role.id = 2 then # for manager
+    #   can :read, ActiveAdmin::Page, :name => "User"
+    # end
+    # if user.role.id = 3 then # for user
+    #   can :read, :all
+    #   # can :read, ActiveAdmin::Page, :name => "User"
+    # end
+
+    user ||= User.new # guest user (not logged in)
+
+    if user.role_id == 1 then # for developer
       can :manage, :all
     end
-    if user.role.id = 2 then # for manager
-      can :read, ActiveAdmin::Page, :name => "User"
+    if user.role_id == 3 then # for user
+      can :read, :all
     end
-    if user.role.id = 3 then # for user
-      can :read, ActiveAdmin::Page, :name => "User"
-    end
+
   end
 
 end
