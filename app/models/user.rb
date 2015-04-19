@@ -5,16 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :registerable, :confirmable
   belongs_to :role # Userからroleを参照可能にする, ex) User.find(1).role
 
-  def update_without_current_password(params, *options)
-    params.delete(:current_password)
+  before_create :set_default_role
 
-    if params[:password].blank? && params[:password_confirmation].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation)
-    end
+  private
 
-    result = update_attributes(params, *options)
-    clean_up_passwords
-    result
+  def set_default_role
+    self.role_id ||= Role.find(3).id  #デフォルトのRole.id
   end
 end

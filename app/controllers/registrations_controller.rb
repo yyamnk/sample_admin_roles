@@ -1,9 +1,9 @@
 class RegistrationsController < Devise::RegistrationsController
 
-  protected
-
-  def update_resource(resource, params)
-    # super # 動作確認用, オーバーライドされたメソッドを読むのみ
-    resource.update_without_current_password(params) # Userモデルで実装する
+  # ref
+  # https://github.com/plataformatec/devise/wiki/How-To:-Redirect-to-a-specific-page-on-successful-sign-up-(registration)
+  def after_inactive_sign_up_path_for(resource) # サインアップしたけどメール認証が終わってない場合
+    # '/an/example/path'
+    '/admin/login'
   end
 end

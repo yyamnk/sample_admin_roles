@@ -23,8 +23,8 @@ ActiveAdmin.register User do
       # パスワードの入力フォームがあると, 常に入力を求められる
       # -> 管理者はuserのパスワード知らない -> 詰む
       # パスワード編集用のページを新しく作るべきかも.
-      f.input :password
-      f.input :password_confirmation
+      # f.input :password
+      # f.input :password_confirmation
       f.input :role
     end
     f.actions
