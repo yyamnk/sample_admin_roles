@@ -14,4 +14,10 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     admin_root_path
   end
+
+  #active_admin配下へ許可されていないユーザがアクセスした場合の遷移先
+  #リダイレクトループ抑止でも必要
+  def access_denied(exception)
+    redirect_to new_user_session_path, :alert => exception.message
+  end
 end

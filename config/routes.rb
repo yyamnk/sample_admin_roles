@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   get 'welcome/index'
 
-  devise_for :users, ActiveAdmin::Devise.config
+  # deviseのコントローラーをoverrideしたい.
+  # ActiveAdmin::Devise.configを上書きする
+  config = ActiveAdmin::Devise.config
+  config[:controllers][:registrations] = 'registrations'
+  devise_for :users, config
   ActiveAdmin.routes(self)
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
