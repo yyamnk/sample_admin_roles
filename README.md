@@ -37,3 +37,7 @@ export EMAIL_BCC=sample@example.com'
 export EMAIL_PASSWORD=パスワード
 export EMAIL_SENDER='送信者名 <ユーザ@gmail.com>'
 ```
+
+#作業記録
+
+`docs/log.md`
