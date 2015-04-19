@@ -45,3 +45,4 @@ end
 
 gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
+gem 'cancancan', '~> 1.10'
