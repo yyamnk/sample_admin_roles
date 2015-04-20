@@ -44,5 +44,6 @@ group :development, :test do
 end
 
 gem 'devise'
+gem 'devise-i18n'
 gem 'activeadmin', github: 'activeadmin'
 gem 'cancancan', '~> 1.10'

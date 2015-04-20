@@ -1363,3 +1363,51 @@ index 9900356..beda81a 100644
 +Rails.application.config.session_store :cookie_store, key: '_sample_admin_roles_session'
 ```
 
+#アプリのlocaleを変更
+
+deviseを簡単に日本語化できるgemがあったので導入.
+
+```
+#Gemfile
+
++gem 'devise-i18n'
+```
+
+```
+bundle
+```
+
+アプリのlocaleを変更
+
+```
+diff --git a/config/application.rb b/config/application.rb
+index 1590328..3c546f3 100644
+--- a/config/application.rb
++++ b/config/application.rb
+@@ -28,6 +28,7 @@ module SampleAdminRoles
+     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
+     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+     # config.i18n.default_locale = :de
++    config.i18n.default_locale = :ja
+```
+
+このままだとActiveAdminで辞書ファイルがなくて怒られるので.
+ActiveAdminのlocaleは`en`にする
+
+```
+diff --git a/config/initializers/active_admin.rb b/config/initializers/active_admin.rb
+index 5519130..95eb2d2 100644
+--- a/config/initializers/active_admin.rb
++++ b/config/initializers/active_admin.rb
+@@ -139,6 +139,11 @@ ActiveAdmin.setup do |config|
+   # Active Admin resources and pages from here.
+   #
+   # config.before_filter :do_something_awesome
++  #
++  # ActiveAdminではenに固定,
++  config.before_filter do
++    I18n.locale = 'en'
++  end
+```
+
+

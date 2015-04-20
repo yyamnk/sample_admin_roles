@@ -139,6 +139,11 @@ ActiveAdmin.setup do |config|
   # Active Admin resources and pages from here.
   #
   # config.before_filter :do_something_awesome
+  #
+  # ActiveAdminではenに固定,
+  config.before_filter do
+    I18n.locale = 'en'
+  end
 
   # == Setting a Favicon
   #
