@@ -1583,3 +1583,20 @@ rake db:seed_fu
 == 20150421145814 CreateUserDetails: migrated (0.0232s) =======================
 ```
 
+ここまで: `35b6763`
+
+# UserDetailとUserの関連付け
+
+忘れていたので追加する
+
+```
+bundle exec rails g migration AddUserIdToUserDetail user:references
+      invoke  active_record
+      create    db/migrate/20150421150907_add_user_id_to_user_detail.rb
+
+rake db:migrate
+== 20150421150907 AddUserIdToUserDetail: migrating ============================
+-- add_reference(:user_details, :user, {:index=>true, :foreign_key=>true})
+   -> 0.0098s
+== 20150421150907 AddUserIdToUserDetail: migrated (0.0098s) ===================
+```

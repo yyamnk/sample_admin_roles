@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421145814) do
+ActiveRecord::Schema.define(version: 20150421150907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,10 +58,12 @@ ActiveRecord::Schema.define(version: 20150421145814) do
     t.string   "tel"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "user_id"
   end
 
   add_index "user_details", ["department_id"], name: "index_user_details_on_department_id", using: :btree
   add_index "user_details", ["grade_id"], name: "index_user_details_on_grade_id", using: :btree
+  add_index "user_details", ["user_id"], name: "index_user_details_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -91,5 +93,6 @@ ActiveRecord::Schema.define(version: 20150421145814) do
 
   add_foreign_key "user_details", "departments"
   add_foreign_key "user_details", "grades"
+  add_foreign_key "user_details", "users"
   add_foreign_key "users", "roles"
 end
