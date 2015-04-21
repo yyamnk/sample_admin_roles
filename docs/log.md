@@ -1431,7 +1431,7 @@ bundle
 bundle exec rails g model Department name_ja:string name_en:string
 ```
 
-```
+``` 
 # db/fixtures/department.rb
 # 所属コース初期値
 Department.seed( :id,
@@ -1468,5 +1468,77 @@ rake db:migrate
 == 20150421143139 CreateDepartments: migrated (0.0388s) =======================
 
 rake db:seed_fu
+== Seed from /Volumes/Data/Dropbox/nfes15/sample_admin_roles/db/fixtures/department.rb
+ - Department {:id=>1, :name_ja=>"[学部]配属前"}
+ - Department {:id=>2, :name_ja=>"[学部]機械創造工学課程"}
+ - Department {:id=>3, :name_ja=>"[学部]電気電子情報工学課程"}
+ - Department {:id=>4, :name_ja=>"[学部]材料開発工学課程"}
+ - Department {:id=>5, :name_ja=>"[学部]建設工学課程"}
+ - Department {:id=>6, :name_ja=>"[学部]環境システム工学課程"}
+ - Department {:id=>7, :name_ja=>"[学部]生物機能工学課程"}
+ - Department {:id=>8, :name_ja=>"[学部]経営情報システム工学課程"}
+ - Department {:id=>9, :name_ja=>"[修士]機械創造工学専攻"}
+ - Department {:id=>10, :name_ja=>"[修士]電気電子情報工学専攻"}
+ - Department {:id=>11, :name_ja=>"[修士]材料開発工学専攻"}
+ - Department {:id=>12, :name_ja=>"[修士]建設工学専攻"}
+ - Department {:id=>13, :name_ja=>"[修士]環境システム工学専攻"}
+ - Department {:id=>14, :name_ja=>"[修士]生物機能工学専攻"}
+ - Department {:id=>15, :name_ja=>"[修士]経営情報システム工学専攻"}
+ - Department {:id=>16, :name_ja=>"[修士]原子力システム安全工学専攻"}
+ - Department {:id=>17, :name_ja=>"[博士]情報・制御工学専攻"}
+ - Department {:id=>18, :name_ja=>"[博士]材料工学専攻"}
+ - Department {:id=>19, :name_ja=>"[博士]エネルギー・環境工学専攻"}
+ - Department {:id=>20, :name_ja=>"[博士]生物統合工学専攻"}
+ - Department {:id=>21, :name_ja=>"[博士]システム安全専攻"}
+ - Department {:id=>22, :name_ja=>"[他]不明"}
+```
+
+ここまで: `b013a49`
+
+
+## 学年モデルも追加
+
+```
+bundle exec rails g model Grade name:string
+```
+
+```
+# db/fixtures/grade.rb
+
+# 学年の初期値
+Grade.seed( :id,
+  { id: 1, name: 'B1' },
+  { id: 2, name: 'B2' },
+  { id: 3, name: 'B3' },
+  { id: 4, name: 'B4' },
+  { id: 5, name: 'M1' },
+  { id: 6, name: 'M2' },
+  { id: 7, name: 'D1' },
+  { id: 8, name: 'D2' },
+  { id: 9, name: 'D3' },
+  { id: 10, name: 'その他, other' }
+)
+```
+
+```
+rake db:migrate
+== 20150421144117 CreateGrades: migrating =====================================
+-- create_table(:grades)
+   -> 0.0057s
+== 20150421144117 CreateGrades: migrated (0.0058s) ============================
+
+rake db:seed_fu
+... 略
+== Seed from /Volumes/Data/Dropbox/nfes15/sample_admin_roles/db/fixtures/grade.rb
+ - Grade {:id=>1, :name=>"B1"}
+ - Grade {:id=>2, :name=>"B2"}
+ - Grade {:id=>3, :name=>"B3"}
+ - Grade {:id=>4, :name=>"B4"}
+ - Grade {:id=>5, :name=>"M1"}
+ - Grade {:id=>6, :name=>"M2"}
+ - Grade {:id=>7, :name=>"D1"}
+ - Grade {:id=>8, :name=>"D2"}
+ - Grade {:id=>9, :name=>"D3"}
+ - Grade {:id=>10, :name=>"その他, other"}
 ```
 
