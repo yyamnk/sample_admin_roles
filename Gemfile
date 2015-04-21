@@ -43,7 +43,12 @@ group :development, :test do
   gem 'spring'
 end
 
+# 認証, パスワード暗号化, 再発行
 gem 'devise'
-gem 'devise-i18n'
+gem 'devise-i18n' # アプリのlocalにあわせて多言語化
+# 管理画面
 gem 'activeadmin', github: 'activeadmin'
+# 権限管理
 gem 'cancancan', '~> 1.10'
+# 初期データ入力
+gem 'seed-fu', '~> 2.3'

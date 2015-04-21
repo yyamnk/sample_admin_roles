@@ -1363,12 +1363,12 @@ index 9900356..beda81a 100644
 +Rails.application.config.session_store :cookie_store, key: '_sample_admin_roles_session'
 ```
 
-#アプリのlocaleを変更
+# アプリのlocaleを変更
 
 deviseを簡単に日本語化できるgemがあったので導入.
 
 ```
-#Gemfile
+# Gemfile
 
 +gem 'devise-i18n'
 ```
@@ -1410,4 +1410,63 @@ index 5519130..95eb2d2 100644
 +  end
 ```
 
+# Userの詳細情報を追加
+
+UserDetailモデルを追加し, Userモデルと関連付ける.
+
+初期データを流し込むために`seed-fu`を追加
+
+```
+# Gemfileへ
+gem 'seed-fu', '~> 2.3'
+```
+
+```
+bundle
+```
+
+## 先に所属コースモデルを作る.
+
+```
+bundle exec rails g model Department name_ja:string name_en:string
+```
+
+```
+# db/fixtures/department.rb
+# 所属コース初期値
+Department.seed( :id,
+  { id: 1  , name_ja: '[学部]配属前' }                     ,
+  { id: 2  , name_ja: '[学部]機械創造工学課程' }           ,
+  { id: 3  , name_ja: '[学部]電気電子情報工学課程' }       ,
+  { id: 4  , name_ja: '[学部]材料開発工学課程' }           ,
+  { id: 5  , name_ja: '[学部]建設工学課程' }               ,
+  { id: 6  , name_ja: '[学部]環境システム工学課程' }       ,
+  { id: 7  , name_ja: '[学部]生物機能工学課程' }           ,
+  { id: 8  , name_ja: '[学部]経営情報システム工学課程' }   ,
+  { id: 9  , name_ja: '[修士]機械創造工学専攻' }           ,
+  { id: 10 , name_ja: '[修士]電気電子情報工学専攻' }       ,
+  { id: 11 , name_ja: '[修士]材料開発工学専攻' }           ,
+  { id: 12 , name_ja: '[修士]建設工学専攻' }               ,
+  { id: 13 , name_ja: '[修士]環境システム工学専攻' }       ,
+  { id: 14 , name_ja: '[修士]生物機能工学専攻' }           ,
+  { id: 15 , name_ja: '[修士]経営情報システム工学専攻' }   ,
+  { id: 16 , name_ja: '[修士]原子力システム安全工学専攻' } ,
+  { id: 17 , name_ja: '[博士]情報・制御工学専攻' }         ,
+  { id: 18 , name_ja: '[博士]材料工学専攻' }               ,
+  { id: 19 , name_ja: '[博士]エネルギー・環境工学専攻' }   ,
+  { id: 20 , name_ja: '[博士]生物統合工学専攻' }           ,
+  { id: 21 , name_ja: '[博士]システム安全専攻' }           ,
+  { id: 22 , name_ja: '[他]不明' }
+)
+```
+
+```sh
+rake db:migrate
+== 20150421143139 CreateDepartments: migrating ================================
+-- create_table(:departments)
+   -> 0.0387s
+== 20150421143139 CreateDepartments: migrated (0.0388s) =======================
+
+rake db:seed_fu
+```
 
