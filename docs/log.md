@@ -1600,3 +1600,90 @@ rake db:migrate
    -> 0.0098s
 == 20150421150907 AddUserIdToUserDetail: migrated (0.0098s) ===================
 ```
+
+# scaffoldで生成するコントローラーを標準へ戻す.
+
+ActiveAdminは`inherited_resouces`でコントローラーを生成する.
+そのため, ActiveAdminの導入後は`scaffold`のコントローラーがinherited_resoucesを継承するようになる.
+使いにくいので標準へ戻す.
+
+[参考](http://www.codebeerstartups.com/2013/04/how-to-disable-inherited-resources-controller-in-ruby-on-rails)
+から
+
+```
+diff --git a/config/application.rb b/config/application.rb
+index 3c546f3..5138444 100644
+--- a/config/application.rb
++++ b/config/application.rb
+@@ -32,5 +32,8 @@ module SampleAdminRoles
+
+     # Do not swallow errors in after_commit/after_rollback callbacks.
+     config.active_record.raise_in_transactional_callbacks = true
++
++    # scaffoldで生成するコントローラーにinherited_resoucesを継承させない
++    config.app_generators.scaffold_controller = :scaffold_controller
+   end
+ end
+```
+
+ロールバックをかける
+
+```
+rake db:rollback
+== 20150421150907 AddUserIdToUserDetail: reverting ============================
+-- remove_reference(:user_details, :user, {:index=>true, :foreign_key=>true})
+   -> 0.0136s
+== 20150421150907 AddUserIdToUserDetail: reverted (0.0162s) ===================
+
+rake db:rollback
+== 20150421145814 CreateUserDetails: reverting ================================
+-- drop_table(:user_details)
+   -> 0.0047s
+== 20150421145814 CreateUserDetails: reverted (0.0078s) =======================
+```
+
+```
+# マイグレーションを削除
+bundle exec rails destroy migration AddUserIdToUserDetail
+      invoke  active_record
+      remove    db/migrate/20150421150907_add_user_id_to_user_detail.rb
+
+# scaffoldを取り消す
+bundle exec rails destroy scaffold UserDetail
+
+# 再度scaffold, userとの紐付けもやる
+bundle exec rails g scaffold UserDetail user:references name_ja:string name_en:string department:references grade:references tel:string
+      invoke  active_record
+      create    db/migrate/20150421154159_create_user_details.rb
+      create    app/models/user_detail.rb
+      invoke  resource_route
+       route    resources :user_details
+      invoke  scaffold_controller
+      create    app/controllers/user_details_controller.rb
+      invoke    erb
+      create      app/views/user_details
+      create      app/views/user_details/index.html.erb
+      create      app/views/user_details/edit.html.erb
+      create      app/views/user_details/show.html.erb
+      create      app/views/user_details/new.html.erb
+      create      app/views/user_details/_form.html.erb
+      invoke    helper
+      create      app/helpers/user_details_helper.rb
+      invoke    jbuilder
+      create      app/views/user_details/index.json.jbuilder
+      create      app/views/user_details/show.json.jbuilder
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/user_details.coffee
+      invoke    scss
+      create      app/assets/stylesheets/user_details.scss
+      invoke  scss
+   identical    app/assets/stylesheets/scaffolds.scss
+
+rake db:migrate
+== 20150421154159 CreateUserDetails: migrating ================================
+-- create_table(:user_details)
+   -> 0.0239s
+== 20150421154159 CreateUserDetails: migrated (0.0240s) =======================
+```
+

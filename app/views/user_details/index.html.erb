@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>User</th>
       <th>Name ja</th>
       <th>Name en</th>
       <th>Department</th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @user_details.each do |user_detail| %>
       <tr>
+        <td><%= user_detail.user %></td>
         <td><%= user_detail.name_ja %></td>
         <td><%= user_detail.name_en %></td>
         <td><%= user_detail.department %></td>
