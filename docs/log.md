@@ -1542,3 +1542,44 @@ rake db:seed_fu
  - Grade {:id=>10, :name=>"その他, other"}
 ```
 
+ここまで: `db8d279`
+
+## ユーザ詳細を作成し, Department, Gradeと関連付ける
+
+```sh
+% bundle exec rails g scaffold UserDetail name_ja:string name_en:string department:references grade:references tel:string
+
+    invoke  active_record
+      create    db/migrate/20150421145814_create_user_details.rb
+      create    app/models/user_detail.rb
+      invoke  resource_route
+       route    resources :user_details
+      invoke  inherited_resources_controller
+      create    app/controllers/user_details_controller.rb
+      invoke    erb
+      create      app/views/user_details
+      create      app/views/user_details/index.html.erb
+      create      app/views/user_details/edit.html.erb
+      create      app/views/user_details/show.html.erb
+      create      app/views/user_details/new.html.erb
+      create      app/views/user_details/_form.html.erb
+      invoke    helper
+      create      app/helpers/user_details_helper.rb
+      invoke    jbuilder
+      create      app/views/user_details/index.json.jbuilder
+      create      app/views/user_details/show.json.jbuilder
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/user_details.coffee
+      invoke    scss
+      create      app/assets/stylesheets/user_details.scss
+      invoke  scss
+   identical    app/assets/stylesheets/scaffolds.scss
+
+% rake db:migrate
+== 20150421145814 CreateUserDetails: migrating ================================
+-- create_table(:user_details)
+   -> 0.0231s
+== 20150421145814 CreateUserDetails: migrated (0.0232s) =======================
+```
+
