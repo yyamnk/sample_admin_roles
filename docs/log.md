@@ -1687,3 +1687,121 @@ rake db:migrate
 == 20150421154159 CreateUserDetails: migrated (0.0240s) =======================
 ```
 
+ここまで: `222d723`
+
+うーん, viewsを書くのが面倒くさい, ついでにbootstrapを当てれば楽なんじゃないか.
+
+# simple_form + bootstrapを導入する
+
+[多分有名な鉄板サイト](http://www.ohmyenter.com/?p=197)を参考にする.
+
+```
+diff --git a/Gemfile b/Gemfile
+index 3a4311f..d36cb5c 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -52,3 +52,10 @@ gem 'activeadmin', github: 'activeadmin'
+ gem 'cancancan', '~> 1.10'
+ # 初期データ入力
+ gem 'seed-fu', '~> 2.3'
++# viewを簡単に書く
++gem 'simple_form'
++# bootstrap関連
++# twitter-bootstrap-railsはlessを使うので必要
++gem 'therubyracer'
++gem 'less-rails'
++gem 'twitter-bootstrap-rails'
++gem 'simple_form'
+```
+
+```
+bundle
+```
+
+いったんマイグレーションをロールバックして, scaffoldで作成したのを消す.
+
+```
+% rake db:rollback
+[Simple Form] Simple Form is not configured in the application and will use the default values. Use `rails generate simple_form:install` to generate the Simple Form configuration.
+== 20150421154159 CreateUserDetails: reverting ================================
+-- drop_table(:user_details)
+   -> 0.0117s
+== 20150421154159 CreateUserDetails: reverted (0.0145s) =======================
+
+% bundle exec rails destroy scaffold UserDetail
+      invoke  active_record
+      remove    db/migrate/20150421154159_create_user_details.rb
+      remove    app/models/user_detail.rb
+      invoke  resource_route
+       route    resources :user_details
+      invoke  scaffold_controller
+      remove    app/controllers/user_details_controller.rb
+      invoke    erb
+      remove      app/views/user_details
+      remove      app/views/user_details/index.html.erb
+      remove      app/views/user_details/edit.html.erb
+      remove      app/views/user_details/show.html.erb
+      remove      app/views/user_details/new.html.erb
+      remove      app/views/user_details/_form.html.erb
+      invoke    helper
+      remove      app/helpers/user_details_helper.rb
+      invoke    jbuilder
+      remove      app/views/user_details
+      remove      app/views/user_details/index.json.jbuilder
+      remove      app/views/user_details/show.json.jbuilder
+      invoke  assets
+      invoke    coffee
+      remove      app/assets/javascripts/user_details.coffee
+      invoke    scss
+      remove      app/assets/stylesheets/user_details.scss
+      invoke  scss
+```
+
+```
+% bundle exec rails g bootstrap:install less
+      insert  app/assets/javascripts/application.js
+      create  app/assets/javascripts/bootstrap.js.coffee
+      create  app/assets/stylesheets/bootstrap_and_overrides.css.less
+      create  config/locales/en.bootstrap.yml
+        gsub  app/assets/stylesheets/application.css
+
+% bundle exec rails generate simple_form:install --bootstrap
+   identical  config/initializers/simple_form.rb
+      create  config/initializers/simple_form_bootstrap.rb
+       exist  config/locales
+   identical  config/locales/simple_form.en.yml
+   identical  lib/templates/erb/scaffold/_form.html.erb
+===============================================================================
+
+  Be sure to have a copy of the Bootstrap stylesheet available on your
+  application, you can get it on http://getbootstrap.com/.
+
+  Inside your views, use the 'simple_form_for' with one of the Bootstrap form
+  classes, '.form-horizontal' or '.form-inline', as the following:
+
+    = simple_form_for(@user, html: { class: 'form-horizontal' }) do |form|
+
+===============================================================================
+```
+
+マイグレーション忘れてた
+
+```
+% rake db:migrate
+== 20150421144117 CreateGrades: migrating =====================================
+-- create_table(:grades)
+   -> 0.0159s
+== 20150421144117 CreateGrades: migrated (0.0160s) ============================
+
+== 20150422133839 CreateUserDetails: migrating ================================
+-- create_table(:user_details)
+   -> 0.0245s
+== 20150422133839 CreateUserDetails: migrated (0.0246s) =======================
+```
+
+試行錯誤で戻しすぎてたかも( grade作成前までrollbackしてる)
+
+実行してみると, simple_formとbootstrapで作成されているのがわかる.
+しかし, 問題は`f.association`で引っ張られる値がハッシュ?っぽくなってる.
+`Grade`のレコードも無いみたい.
+

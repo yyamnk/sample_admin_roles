@@ -52,3 +52,10 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'cancancan', '~> 1.10'
 # 初期データ入力
 gem 'seed-fu', '~> 2.3'
+# viewを簡単に書く
+gem 'simple_form'
+# bootstrap関連
+# twitter-bootstrap-railsはlessを使うので必要
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'

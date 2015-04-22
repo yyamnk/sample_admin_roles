@@ -1,41 +1,16 @@
-<%= form_for(@user_detail) do |f| %>
-  <% if @user_detail.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user_detail.errors.count, "error") %> prohibited this user_detail from being saved:</h2>
+<%= simple_form_for(@user_detail) do |f| %>
+  <%= f.error_notification %>
 
-      <ul>
-      <% @user_detail.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="form-inputs">
+    <%= f.association :user %>
+    <%= f.input :name_ja %>
+    <%= f.input :name_en %>
+    <%= f.association :department %>
+    <%= f.association :grade %>
+    <%= f.input :tel %>
+  </div>
 
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :name_ja %><br>
-    <%= f.text_field :name_ja %>
-  </div>
-  <div class="field">
-    <%= f.label :name_en %><br>
-    <%= f.text_field :name_en %>
-  </div>
-  <div class="field">
-    <%= f.label :department_id %><br>
-    <%= f.text_field :department_id %>
-  </div>
-  <div class="field">
-    <%= f.label :grade_id %><br>
-    <%= f.text_field :grade_id %>
-  </div>
-  <div class="field">
-    <%= f.label :tel %><br>
-    <%= f.text_field :tel %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.button :submit %>
   </div>
 <% end %>
