@@ -1889,3 +1889,49 @@ index 75dba17..b091eca 100644
 ```
 
 showにデザインが適用されてないみたい.
+
+ここまで: `2a99869`
+
+# bootstrapのデザインを適用する
+
+```
+% bundle exec rails g bootstrap:layout application fluid
+    conflict  app/views/layouts/application.html.erb
+Overwrite /Volumes/Data/Dropbox/nfes15/sample_admin_roles/app/views/layouts/application.html.erb? (enter "h" for help) [Ynaqdh] Y
+       force  app/views/layouts/application.html.erb
+
+% bundle exec rails g bootstrap:themed UserDetails
+    conflict  app/views/user_details/index.html.erb
+Overwrite /Volumes/Data/Dropbox/nfes15/sample_admin_roles/app/views/user_details/index.html.erb? (enter "h" for help) [Ynaqdh] Y
+       force  app/views/user_details/index.html.erb
+    conflict  app/views/user_details/new.html.erb
+Overwrite /Volumes/Data/Dropbox/nfes15/sample_admin_roles/app/views/user_details/new.html.erb? (enter "h" for help) [Ynaqdh] Y
+       force  app/views/user_details/new.html.erb
+    conflict  app/views/user_details/edit.html.erb
+Overwrite /Volumes/Data/Dropbox/nfes15/sample_admin_roles/app/views/user_details/edit.html.erb? (enter "h" for help) [Ynaqdh] Y
+       force  app/views/user_details/edit.html.erb
+    conflict  app/views/user_details/_form.html.erb
+Overwrite /Volumes/Data/Dropbox/nfes15/sample_admin_roles/app/views/user_details/_form.html.erb? (enter "h" for help) [Ynaqdh] Y
+       force  app/views/user_details/_form.html.erb
+    conflict  app/views/user_details/show.html.erb
+Overwrite /Volumes/Data/Dropbox/nfes15/sample_admin_roles/app/views/user_details/show.html.erb? (enter "h" for help) [Ynaqdh] Y
+       force  app/views/user_details/show.html.erb
+```
+
+エラー出た.
+
+```
+translation missing: ja.time.formats.default
+```
+
+デフォルトのlocaleを`ja`にしているため.
+
+```
+diff --git a/config/application.rb b/config/application.rb
+-    config.i18n.default_locale = :ja
++    # config.i18n.default_locale = :ja
+```
+
+にしたら表示できた.
+が, ちょっと表示がおかしいかな. 一部でActiveAdminと競合しているみたい.
+関連するModelの表示が, またおかしくなった...さっき修正したの全部上書きされたからな...

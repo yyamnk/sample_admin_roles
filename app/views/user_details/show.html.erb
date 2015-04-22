@@ -1,34 +1,29 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = UserDetail -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @user_detail.user.email %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
+  <dd><%= @user_detail.user_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:name_ja) %>:</strong></dt>
+  <dd><%= @user_detail.name_ja %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:name_en) %>:</strong></dt>
+  <dd><%= @user_detail.name_en %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:department_id) %>:</strong></dt>
+  <dd><%= @user_detail.department_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:grade_id) %>:</strong></dt>
+  <dd><%= @user_detail.grade_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:tel) %>:</strong></dt>
+  <dd><%= @user_detail.tel %></dd>
+</dl>
 
-<p>
-  <strong>Name ja:</strong>
-  <%= @user_detail.name_ja %>
-</p>
-
-<p>
-  <strong>Name en:</strong>
-  <%= @user_detail.name_en %>
-</p>
-
-<p>
-  <strong>Department:</strong>
-  <%= @user_detail.department.name_ja %>
-</p>
-
-<p>
-  <strong>Grade:</strong>
-  <%= @user_detail.grade.name %>
-</p>
-
-<p>
-  <strong>Tel:</strong>
-  <%= @user_detail.tel %>
-</p>
-
-<%= link_to 'Edit', edit_user_detail_path(@user_detail) %> |
-<%= link_to 'Back', user_details_path %>
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              user_details_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_user_detail_path(@user_detail), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              user_detail_path(@user_detail),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
