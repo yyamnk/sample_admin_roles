@@ -1943,3 +1943,47 @@ diff --git a/config/application.rb b/config/application.rb
 
 `index`, `show`, `_form`を書き直した.
 
+ここまで: `07e986e`
+
+# bootstrapのデザインがActiveAdminで上書きされるのを抑止する
+
+ボタン等がbootstrapのものではなく, ActiveAdminのデザインになる.
+前々から問題だったらしい. [参考](https://github.com/activeadmin/activeadmin/issues/2514)
+
+設定をいくら変えても効果なかったが, 
+
+```
+# すでにプリコンパイルされたファイルをすべて消す
+# http://qiita.com/metheglin/items/c5c756246b7afbd34ae2
+
+bundle exec rake assets:clobber
+```
+
+で一発だった.
+ここで数時間詰まった...
+
+確認した限りでは,
+
+```
+# app/assets/stylesheets/application.css
+
+ *= require_tree .
+ *= require_self
+```
+
+```
+# app/assets/stylesheets/application.css
+
+ *= require_directory .
+ *= require_self
+```
+
+のいずれでも`app/assets/stylesheets/active_admin.css.scss`だとダメで,
+
+```
+mv app/assets/stylesheets/active_admin.css.scss vendor/assets/stylesheets/active_admin.css.scss
+```
+
+が必要だった.
+ローカル環境で`/user_details/1/edit`とか(ActiveAdmin内部でないpath)にアクセス時, 
+`app/assets/active_admin*`が読み込まれなければok.
