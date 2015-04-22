@@ -1,5 +1,6 @@
 class UserDetailsController < ApplicationController
   before_action :set_user_detail, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # for cancancan
 
   # GET /user_details
   # GET /user_details.json

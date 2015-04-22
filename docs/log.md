@@ -1994,3 +1994,50 @@ mv app/assets/stylesheets/active_admin.css.scss vendor/assets/stylesheets/active
 
 # UserDetailにバリデーションを追加
 
+`81d8872`
+
+
+# CanCanCanでUserDetailにレコードのアクセス権を設定する
+
+まず簡単に`user.id`で縛りをつける.
+
+```
+diff --git a/app/models/ability.rb b/app/models/ability.rb
+index 5c5feb2..b0bc1db 100644
+--- a/app/models/ability.rb
++++ b/app/models/ability.rb
+@@ -31,13 +31,15 @@ class Ability
+     #
+
+     user ||= User.new # guest user (not logged in)
+-    # can :read, ActiveAdmin::Page, :name => "Dashboard" # for test, layout実装前はログアウトできないので
+
+     if user.role_id == 1 then # for developer
+       can :manage, :all
+     end
+     if user.role_id == 3 then # for user
+-      can :read, :all
++      # emailのconfirmが終わっていれば
++      #
++      # UserDetailの自分のレコードは作成, 更新, 読みが可能. 削除はだめ.
++      can [:read, :create, :update], UserDetail, :user_id => user.id
+     end
+```
+
+メール認証の判定は後回し.
+
+コントローラーにcancancanの設定を読むように追加
+
+```
+--- a/app/controllers/user_details_controller.rb
++++ b/app/controllers/user_details_controller.rb
+@@ -1,5 +1,6 @@
+ class UserDetailsController < ApplicationController
+   before_action :set_user_detail, only: [:show, :edit, :update, :destroy]
++  load_and_authorize_resource # for cancancan
+```
+
+これでUserDetailの`show`, `create`, `update`, `delete`で動作確認した.
+
+しかしインデックスでは一覧で他のUser.idのレコードが見えてしまう.
+actionに`delete`もある.

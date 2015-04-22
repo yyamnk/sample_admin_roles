@@ -31,13 +31,15 @@ class Ability
     #
 
     user ||= User.new # guest user (not logged in)
-    # can :read, ActiveAdmin::Page, :name => "Dashboard" # for test, layout実装前はログアウトできないので
 
     if user.role_id == 1 then # for developer
       can :manage, :all
     end
     if user.role_id == 3 then # for user
-      can :read, :all
+      # emailのconfirmが終わっていれば
+      #
+      # UserDetailの自分のレコードは作成, 更新, 読みが可能. 削除はだめ.
+      can [:read, :create, :update], UserDetail, :user_id => user.id
     end
 
   end
