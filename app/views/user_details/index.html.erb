@@ -18,11 +18,11 @@
   <tbody>
     <% @user_details.each do |user_detail| %>
       <tr>
-        <td><%= user_detail.user %></td>
+        <td><%= user_detail.user.email %></td>
         <td><%= user_detail.name_ja %></td>
         <td><%= user_detail.name_en %></td>
-        <td><%= user_detail.department %></td>
-        <td><%= user_detail.grade %></td>
+        <td><%= user_detail.department.name_ja %></td>
+        <td><%= user_detail.grade.name %></td>
         <td><%= user_detail.tel %></td>
         <td><%= link_to 'Show', user_detail %></td>
         <td><%= link_to 'Edit', edit_user_detail_path(user_detail) %></td>

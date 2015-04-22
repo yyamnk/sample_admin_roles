@@ -2,10 +2,10 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :user %>
+    <%= f.association :user, label_method: :email%>
     <%= f.input :name_ja %>
     <%= f.input :name_en %>
-    <%= f.association :department %>
+    <%= f.association :department, label_method: :name_ja %>
     <%= f.association :grade %>
     <%= f.input :tel %>
   </div>

@@ -1816,4 +1816,76 @@ rake db:seed_fu
 `Grade`のデータは引っ張れてるみたい.
 どうも`name`要素を引っ張ってくるようだ.
 
+ここまで: `799b7b5`
 
+# UserDetailのDepartment, Gradeの表示を治す
+
+`_form`, `index`, `show`で該当部分に明示する
+```
+diff --git a/app/views/user_details/_form.html.erb b/app/views/user_details/_form.html.erb
+index 3bfff85..9d68ef9 100644
+--- a/app/views/user_details/_form.html.erb
++++ b/app/views/user_details/_form.html.erb
+@@ -2,10 +2,10 @@
+   <%= f.error_notification %>
+
+   <div class="form-inputs">
+-    <%= f.association :user %>
++    <%= f.association :user, label_method: :email%>
+     <%= f.input :name_ja %>
+     <%= f.input :name_en %>
+-    <%= f.association :department %>
++    <%= f.association :department, label_method: :name_ja %>
+     <%= f.association :grade %>
+     <%= f.input :tel %>
+   </div>
+
+diff --git a/app/views/user_details/index.html.erb b/app/views/user_details/index.html.erb
+index 49a2fd0..4fc4a89 100644
+--- a/app/views/user_details/index.html.erb
++++ b/app/views/user_details/index.html.erb
+@@ -18,11 +18,11 @@
+   <tbody>
+     <% @user_details.each do |user_detail| %>
+       <tr>
+-        <td><%= user_detail.user %></td>
++        <td><%= user_detail.user.email %></td>
+         <td><%= user_detail.name_ja %></td>
+         <td><%= user_detail.name_en %></td>
+-        <td><%= user_detail.department %></td>
+-        <td><%= user_detail.grade %></td>
++        <td><%= user_detail.department.name_ja %></td>
++        <td><%= user_detail.grade.name %></td>
+         <td><%= user_detail.tel %></td>
+         <td><%= link_to 'Show', user_detail %></td>
+         <td><%= link_to 'Edit', edit_user_detail_path(user_detail) %></td>
+
+diff --git a/app/views/user_details/show.html.erb b/app/views/user_details/show.html.erb
+index 75dba17..b091eca 100644
+--- a/app/views/user_details/show.html.erb
++++ b/app/views/user_details/show.html.erb
+@@ -2,7 +2,7 @@
+
+ <p>
+   <strong>User:</strong>
+-  <%= @user_detail.user %>
++  <%= @user_detail.user.email %>
+ </p>
+
+ <p>
+@@ -17,12 +17,12 @@
+
+ <p>
+   <strong>Department:</strong>
+-  <%= @user_detail.department %>
++  <%= @user_detail.department.name_ja %>
+ </p>
+
+ <p>
+   <strong>Grade:</strong>
+-  <%= @user_detail.grade %>
++  <%= @user_detail.grade.name %>
+ </p>
+```
+
+showにデザインが適用されてないみたい.
