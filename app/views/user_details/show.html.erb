@@ -4,16 +4,16 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
+  <dt><strong><%= model_class.human_attribute_name(:user_email) %>:</strong></dt>
   <dd><%= @user_detail.user_id %></dd>
   <dt><strong><%= model_class.human_attribute_name(:name_ja) %>:</strong></dt>
   <dd><%= @user_detail.name_ja %></dd>
   <dt><strong><%= model_class.human_attribute_name(:name_en) %>:</strong></dt>
   <dd><%= @user_detail.name_en %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:department_id) %>:</strong></dt>
-  <dd><%= @user_detail.department_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:grade_id) %>:</strong></dt>
-  <dd><%= @user_detail.grade_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:department_name_ja) %>:</strong></dt>
+  <dd><%= @user_detail.department.name_ja %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:grade_name) %>:</strong></dt>
+  <dd><%= @user_detail.grade.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:tel) %>:</strong></dt>
   <dd><%= @user_detail.tel %></dd>
 </dl>

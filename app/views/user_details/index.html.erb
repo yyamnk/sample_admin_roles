@@ -5,28 +5,24 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
+      <th><%= model_class.human_attribute_name(:user_email) %></th>
       <th><%= model_class.human_attribute_name(:name_ja) %></th>
       <th><%= model_class.human_attribute_name(:name_en) %></th>
-      <th><%= model_class.human_attribute_name(:department_id) %></th>
-      <th><%= model_class.human_attribute_name(:grade_id) %></th>
+      <th><%= model_class.human_attribute_name(:department_name_ja) %></th>
+      <th><%= model_class.human_attribute_name(:grade_name) %></th>
       <th><%= model_class.human_attribute_name(:tel) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @user_details.each do |user_detail| %>
       <tr>
-        <td><%= link_to user_detail.id, user_detail_path(user_detail) %></td>
-        <td><%= user_detail.user_id %></td>
+        <td><%= user_detail.user.email %></td>
         <td><%= user_detail.name_ja %></td>
         <td><%= user_detail.name_en %></td>
-        <td><%= user_detail.department_id %></td>
-        <td><%= user_detail.grade_id %></td>
+        <td><%= user_detail.department.name_ja %></td>
+        <td><%= user_detail.grade.name %></td>
         <td><%= user_detail.tel %></td>
-        <td><%=l user_detail.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_user_detail_path(user_detail), :class => 'btn btn-default btn-xs' %>

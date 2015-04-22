@@ -1,14 +1,14 @@
 <%= simple_form_for @user_detail, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :user_id %>
-  <%= error_span(@user_detail[:user_id]) %>
+  <%= f.association :user, label_method: :email %>
+  <%= error_span(@user_detail[:user]) %>
   <%= f.input :name_ja %>
   <%= error_span(@user_detail[:name_ja]) %>
   <%= f.input :name_en %>
   <%= error_span(@user_detail[:name_en]) %>
-  <%= f.input :department_id %>
-  <%= error_span(@user_detail[:department_id]) %>
-  <%= f.input :grade_id %>
-  <%= error_span(@user_detail[:grade_id]) %>
+  <%= f.association :department, label_method: :name_ja %>
+  <%= error_span(@user_detail[:department]) %>
+  <%= f.association :grade, label_method: :name %>
+  <%= error_span(@user_detail[:grade]) %>
   <%= f.input :tel %>
   <%= error_span(@user_detail[:tel]) %>
 

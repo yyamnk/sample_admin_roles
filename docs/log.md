@@ -1935,3 +1935,11 @@ diff --git a/config/application.rb b/config/application.rb
 にしたら表示できた.
 が, ちょっと表示がおかしいかな. 一部でActiveAdminと競合しているみたい.
 関連するModelの表示が, またおかしくなった...さっき修正したの全部上書きされたからな...
+
+ここまで: `07b2e16`
+
+
+# bootstrapで上書きされたsimple_formのviewを修正する
+
+`index`, `show`, `_form`を書き直した.
+
