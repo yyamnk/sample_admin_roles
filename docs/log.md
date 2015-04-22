@@ -1987,3 +1987,10 @@ mv app/assets/stylesheets/active_admin.css.scss vendor/assets/stylesheets/active
 が必要だった.
 ローカル環境で`/user_details/1/edit`とか(ActiveAdmin内部でないpath)にアクセス時, 
 `app/assets/active_admin*`が読み込まれなければok.
+
+ここまで: `57d47ce`
+
+メモ: activeAdminの解説は[ココ](http://railscasts.com/episodes/284-active-admin?autoplay=true)がすばらしい.
+
+# UserDetailにバリデーションを追加
+
