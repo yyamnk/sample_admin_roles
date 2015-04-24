@@ -1,2 +1,19 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<h1>Dashboard</h1>
+
+<% if @user_detail.nil? %>
+  <%= "ようこそ #{@user.email} さん" %>
+<% else %>
+  <%= "ようこそ #{@user_detail.name_ja} さん" %>
+<% end %>
+
+<p>ここでは技大祭の情報登録, 管理が可能です.</p>
+
+<% if @user_detail.nil? %>
+  <% # まず連絡先を登録させる %>
+  <p>各種手続の前にユーザ情報をご登録ください.</p>
+  <p><%= link_to "ユーザ情報の登録", new_user_detail_path %></p>
+<% else %>
+  <% # 連絡先の編集は許可 %>
+  <p><%= link_to "ユーザ情報の更新", edit_user_detail_path %></p>
+  <p><%#= link_to "参加団体の登録", new_group_path %></p>
+<% end %>

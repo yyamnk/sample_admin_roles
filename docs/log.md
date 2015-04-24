@@ -2102,4 +2102,9 @@ diff --git a/app/models/ability.rb b/app/models/ability.rb
 モデルが存在しないのに`can :manage, Welcome`として詰まった.
 [こちら](http://qiita.com/umanoda/items/679419ce30d1996628ed)のModelのないコントローラを参照.
 
+ここまで: `43451a8`
 
+# ログイン後のwelcomeページへユーザ情報登録のリンクを追加
+
+`WelcomeController`でカレントユーザの情報, ユーザの詳細情報を取得させる.
+@user, @user_detailによって`views/welcome/index`を変更.
