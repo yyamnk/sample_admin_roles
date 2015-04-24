@@ -31,11 +31,13 @@ class Ability
     #
 
     user ||= User.new # guest user (not logged in)
+    cannot :manage, :all
 
     if user.role_id == 1 then # for developer
       can :manage, :all
     end
     if user.role_id == 3 then # for user
+      can :manage, :welcome
       # emailのconfirmが終わっていれば
       #
       # UserDetailの自分のレコードは作成, 更新, 読みが可能. 削除はだめ.

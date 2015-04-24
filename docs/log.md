@@ -2047,7 +2047,7 @@ actionに`delete`もある.
 # views/layouts/application を修正する
 
 ```
-% git diff app/views
+% git diff app/views 
 diff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb
 index 08026eb..65140a5 100644
 --- a/app/views/layouts/application.html.erb
@@ -2087,4 +2087,19 @@ index 08026eb..65140a5 100644
 ```
 
 ログアウト後に`welcome/index`へアクセスできてしまった.
+
+`welcome_controller`に`authorize_resource :class => false # for cancancan`を追加
+
+そしたら`role_id == 3`で`welcome/index`にアクセスできなくなった.
+welcomeの権限を追加.
+
+```
+diff --git a/app/models/ability.rb b/app/models/ability.rb
+     if user.role_id == 3 then # for user
++      can :manage, :welcome
+```
+
+モデルが存在しないのに`can :manage, Welcome`として詰まった.
+[こちら](http://qiita.com/umanoda/items/679419ce30d1996628ed)のModelのないコントローラを参照.
+
 
