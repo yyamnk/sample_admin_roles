@@ -2041,3 +2041,50 @@ index 5c5feb2..b0bc1db 100644
 
 しかしインデックスでは一覧で他のUser.idのレコードが見えてしまう.
 actionに`delete`もある.
+
+ここまで: `5aa7822`
+
+# views/layouts/application を修正する
+
+```
+% git diff app/views
+diff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb
+index 08026eb..65140a5 100644
+--- a/app/views/layouts/application.html.erb
++++ b/app/views/layouts/application.html.erb
+@@ -48,9 +48,12 @@
+         <a class="navbar-brand" href="#">SampleAdminRoles</a>
+         <div class="navbar-collapse collapse navbar-responsive-collapse">
+           <ul class="nav navbar-nav">
+-            <li><%= link_to "Link1", "/path1"  %></li>
+-            <li><%= link_to "Link2", "/path2"  %></li>
+-            <li><%= link_to "Link3", "/path3"  %></li>
++            <li><%= link_to "Dashboard", "/welcome/index"  %></li>
++            <li>
++              <% if user_signed_in? %>
++                <%= link_to "Log out", destroy_user_session_path, :method => :delete  %>
++              <% end %>
++            </li>
+           </ul>
+         </div>
+       </div>
+@@ -62,17 +65,6 @@
+           <%= bootstrap_flash %>
+           <%= yield %>
+         </div>
+-        <div class="col-lg-3">
+-          <div class="well sidebar-nav">
+-            <h3>Sidebar</h3>
+-            <ul class="nav nav-list">
+-              <li class="nav-header">Sidebar</li>
+-              <li><%= link_to "Link1", "/path1"  %></li>
+-              <li><%= link_to "Link2", "/path2"  %></li>
+-              <li><%= link_to "Link3", "/path3"  %></li>
+-            </ul>
+-          </div><!--/.well -->
+-        </div><!--/span-->
+       </div><!--/row-->
+```
+
+ログアウト後に`welcome/index`へアクセスできてしまった.
+
