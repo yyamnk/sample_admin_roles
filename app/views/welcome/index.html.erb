@@ -14,6 +14,5 @@
   <p><%= link_to "ユーザ情報の登録", new_user_detail_path %></p>
 <% else %>
   <% # 連絡先の編集は許可 %>
-  <p><%= link_to "ユーザ情報の更新", edit_user_detail_path %></p>
-  <p><%#= link_to "参加団体の登録", new_group_path %></p>
+  <p><%= link_to "ユーザ情報の更新", edit_user_detail_path(@user_detail) %></p>
 <% end %>
