@@ -2108,3 +2108,22 @@ diff --git a/app/models/ability.rb b/app/models/ability.rb
 
 `WelcomeController`でカレントユーザの情報, ユーザの詳細情報を取得させる.
 @user, @user_detailによって`views/welcome/index`を変更.
+
+ここまで: `2235aed`
+
+# deviseの日本語化を修正
+
+devise-i18nを導入し,
+
+```
+ActiveAdmin.setup do |config|
+
+  ActiveAdminではenに固定,
+  config.before_filter do
+    I18n.locale = 'en'
+  end
+```
+
+では, deviseのlocaleがenに変更されていた(いつの間にか...)
+
+設定を削除する(デフォルトでja)設定すれば, activeadminで日本語localeがなくてエラー吐く.

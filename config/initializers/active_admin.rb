@@ -141,9 +141,11 @@ ActiveAdmin.setup do |config|
   # config.before_filter :do_something_awesome
   #
   # ActiveAdminではenに固定,
-  config.before_filter do
-    I18n.locale = 'en'
-  end
+  # config.before_filter do
+  #   I18n.locale = 'en'
+  # end
+  # config/locales/jp.yml
+  # でtime.formats.longを設定すればjaでOKだった.
 
   # == Setting a Favicon
   #
