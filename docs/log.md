@@ -2127,3 +2127,11 @@ ActiveAdmin.setup do |config|
 では, deviseのlocaleがenに変更されていた(いつの間にか...)
 
 設定を削除する(デフォルトでja)設定すれば, activeadminで日本語localeがなくてエラー吐く.
+
+`config/locales/jp.yml`に`time.formats.long`を追加して修正.
+
+ここまで: `98dd696`
+
+# アセット周りのリセット方法を書いておく
+
+`config/environments/development.rb`参照.
