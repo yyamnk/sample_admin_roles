@@ -76,4 +76,31 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # ---------------------------
+  # ActionMailer Config
+  # for device, e-mail
+  # ---------------------------
+  # sample settings
+  # https://github.com/RailsApps/rails-devise/blob/master/config/environments/development.rb
+  # `Rails.application.secrets.[domain_name, email_username, email_password]`は
+  # `config/secrets.yml`で定義される (このとき環境変数を読み込むべき)
+  config.action_mailer.smtp_settings = {
+    address: Rails.application.secrets.smtp_adress,
+    port: Rails.application.secrets.smtp_port,
+    domain: Rails.application.secrets.domain_name,
+    authentication: Rails.application.secrets.smtp_auth,
+    tls: Rails.application.secrets.smtp_tls,
+    enable_starttls_auto: true,
+    user_name: Rails.application.secrets.email_username,
+    password: Rails.application.secrets.email_password
+  }
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_options = {
+    bcc: Rails.application.secrets.email_bcc
+  }
+  config.action_mailer.raise_delivery_errors = true
+  # Send email in development mode?
+  config.action_mailer.perform_deliveries = true
 end

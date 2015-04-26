@@ -2135,3 +2135,110 @@ ActiveAdmin.setup do |config|
 # アセット周りのリセット方法を書いておく
 
 `config/environments/development.rb`参照.
+
+ここまで: `906bc57`
+
+# production環境で動作確認する
+
+production環境用にpostgresqlのデータベースを作成する.
+データベースの作成にはpostgresqlのユーザ作成が必要.
+
+アプリで指定されている`username`, `database`を確認する
+
+```
+# config/database.yml
+
+production:
+  <<: *default
+  database: test_admin_permission_production
+  username: test_admin_permission
+  password: <%= ENV['TEST_ADMIN_PERMISSION_DATABASE_PASSWORD'] %>
+```
+
+アプリ作成時に生成せれているので, アプリ名変更後とは名前の整合がとれてない.
+特に問題がないので, このまま使うことにする.
+
+環境変数設定
+
+```
+# ~/.zshrc
+
+export TEST_ADMIN_PERMISSION_DATABASE_PASSWORD=12345
+```
+
+```
+source ~/.zshrc
+```
+
+```sh
+# postalのユーザを作成
+createuser -P -d test_admin_permission
+# TEST_ADMIN_PERMISSION_DATABASE_PASSWORDと同じもの(この例では12345)を入力する
+```
+
+DB作成とマイグレーション適用
+
+```
+rake db:create RAILS_ENV=production
+rake db:migrate RAILS_ENV=production
+```
+
+production環境のDBに初期データを投入
+`Role`の設定がなかったので追加
+
+```
+% rake db:seed_fu RAILS_ENV=production
+
+== Seed from /Volumes/Data/Dropbox/nfes15/sample_admin_roles/db/fixtures/department.rb
+ - Department {:id=>1, :name_ja=>"[学部]配属前"}
+ - Department {:id=>2, :name_ja=>"[学部]機械創造工学課程"}
+ - Department {:id=>3, :name_ja=>"[学部]電気電子情報工学課程"}
+ - Department {:id=>4, :name_ja=>"[学部]材料開発工学課程"}
+ - Department {:id=>5, :name_ja=>"[学部]建設工学課程"}
+ - Department {:id=>6, :name_ja=>"[学部]環境システム工学課程"}
+ - Department {:id=>7, :name_ja=>"[学部]生物機能工学課程"}
+ - Department {:id=>8, :name_ja=>"[学部]経営情報システム工学課程"}
+ - Department {:id=>9, :name_ja=>"[修士]機械創造工学専攻"}
+ - Department {:id=>10, :name_ja=>"[修士]電気電子情報工学専攻"}
+ - Department {:id=>11, :name_ja=>"[修士]材料開発工学専攻"}
+ - Department {:id=>12, :name_ja=>"[修士]建設工学専攻"}
+ - Department {:id=>13, :name_ja=>"[修士]環境システム工学専攻"}
+ - Department {:id=>14, :name_ja=>"[修士]生物機能工学専攻"}
+ - Department {:id=>15, :name_ja=>"[修士]経営情報システム工学専攻"}
+ - Department {:id=>16, :name_ja=>"[修士]原子力システム安全工学専攻"}
+ - Department {:id=>17, :name_ja=>"[博士]情報・制御工学専攻"}
+ - Department {:id=>18, :name_ja=>"[博士]材料工学専攻"}
+ - Department {:id=>19, :name_ja=>"[博士]エネルギー・環境工学専攻"}
+ - Department {:id=>20, :name_ja=>"[博士]生物統合工学専攻"}
+ - Department {:id=>21, :name_ja=>"[博士]システム安全専攻"}
+ - Department {:id=>22, :name_ja=>"[他]不明"}
+
+== Seed from /Volumes/Data/Dropbox/nfes15/sample_admin_roles/db/fixtures/grade.rb
+ - Grade {:id=>1, :name=>"B1"}
+ - Grade {:id=>2, :name=>"B2"}
+ - Grade {:id=>3, :name=>"B3"}
+ - Grade {:id=>4, :name=>"B4"}
+ - Grade {:id=>5, :name=>"M1"}
+ - Grade {:id=>6, :name=>"M2"}
+ - Grade {:id=>7, :name=>"D1"}
+ - Grade {:id=>8, :name=>"D2"}
+ - Grade {:id=>9, :name=>"D3"}
+ - Grade {:id=>10, :name=>"その他, other"}
+
+== Seed from /Volumes/Data/Dropbox/nfes15/sample_admin_roles/db/fixtures/role.rb
+ - Role {:id=>1, :name=>"developer"}
+ - Role {:id=>2, :name=>"manager"}
+ - Role {:id=>3, :name=>"user"}
+```
+
+`config/environments/production.rb`でe-mailの設定を追加
+
+production環境ではcss, jsを適用させるためにプリコンパイルが必要.
+& サーバ起動
+
+```
+rake assets:precompile RAILS_ENV=production
+bundle exec rails s -e production
+```
+
+これで動いた.
