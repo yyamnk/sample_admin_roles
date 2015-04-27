@@ -10,4 +10,7 @@ class UserDetail < ActiveRecord::Base
   validates :name_en, format: { with: /\A[a-zA-Z\s]+\z/i } # 半角英字と半角スペースのみ
   validates :tel,     format: { with: /\A[0-9-]+\z/i }     # 半角数字とハイフンのみ
 
+  def to_s # aciveAdminで表示名を指定する
+    self.name_ja
+  end
 end
