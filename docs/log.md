@@ -2759,3 +2759,11 @@ rake db:migrate
       create  app/views/groups/_form.html.erb
       create  app/views/groups/show.html.erb
 ```
+
+# production環境で動かす
+
+```
+RAILS_ENV=production rake db:migrate
+RAILS_ENV=production rake db:seed_fu
+RAILS_ENV=production rake assets:precompile 
+```
