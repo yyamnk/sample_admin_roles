@@ -23,6 +23,7 @@ ja:
           attributes:
             email:
               taken: "はすでに登録されたアドレスです。重複して登録できません"
+              invalid: "は不正なアドレスです"
             password:
               too_short: "の長さが足りません"
             password_confirmation:
