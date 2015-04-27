@@ -5,7 +5,7 @@ class UserDetailsController < ApplicationController
   # GET /user_details
   # GET /user_details.json
   def index
-    @user_details = UserDetail.find_by( user_id: current_user.id )
+    @user_details = UserDetail.where( user_id: current_user.id )
   end
 
   # GET /user_details/1

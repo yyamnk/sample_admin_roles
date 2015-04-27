@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :groups
   resources :user_details
   get 'welcome/index'
 

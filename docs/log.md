@@ -2716,3 +2716,82 @@ bundle exec rails g migration addUserDetailToUser user:references
 ```
 rake db:migrate
 ```
+
+
+# 参加団体の参加形式用のモデルを作成する
+
+候補は`模擬店, ステージ企画, 展示, その他`
+
+```
+bundle exec rails g model GroupCategory name_ja:string name_en:string
+rake db:migrate
+```
+
+`app/models/group_category.rb`にバリデーション, `to_s`メソッド追加.
+
+ここまで: `7a6fbc4`
+
+# 参加団体登録用にscaffold
+
+```
+bundle exec rails g scaffold Group name:string group_category:references user:references activity:text first_question:text
+rake db:migrate
+```
+
+ここまで: `35c6ec5`
+
+# welcome#indexにリンクを追加
+
+# GroupCategoryに初期値投入
+
+`db/fixtures/group_category.rb`書いた.
+`rake db:seed_fu`
+
+# Gropにバリデーション追加
+
+# Groupにbootstrap適用
+
+```
+% bundle exec rails g bootstrap:themed Groups
+      create  app/views/groups/index.html.erb
+      create  app/views/groups/new.html.erb
+      create  app/views/groups/edit.html.erb
+      create  app/views/groups/_form.html.erb
+      create  app/views/groups/show.html.erb
+```
+
+# production環境で動かす
+
+```
+RAILS_ENV=production rake db:migrate
+RAILS_ENV=production rake db:seed_fu
+RAILS_ENV=production rake assets:precompile 
+```
+
+# Group 修正
+
+変更
+* Controllerでuser_idを取得
+* 関連の表示をidからname, name_jaへ
+* formで名前から選択へ
+
+
+# ActiveAdminにGroup, GroupCategoryを追加
+
+```
+% bundle exec rails generate active_admin:resource Group
+      create  app/admin/group.rb
+% bundle exec rails generate active_admin:resource GroupCategory
+      create  app/admin/group_category.rb
+```
+
+関連モデルの表示を修正
+
+# fixtures修正
+
+展示のidかぶってた.
+
+# Groupをuser_idで権限管理.
+
+Abilityに追記.
+ついでにUserDetail#indexも修正
