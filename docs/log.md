@@ -2639,3 +2639,19 @@ Restarting dynos... done
 ```
 
 `heroku open`でアプリが起動しているのを確認
+
+# herokuに環境変数を追加
+
+```
+% heroku config:set SMTP_ADRESS=smtp.gmail.com
+% heroku config:set SMTP_PORT=587
+% heroku config:set EMAIL_DOMAIN=gmail.com
+% heroku config:set SMTP_AUTH=plain
+% heroku config:set SMTP_TLS=false
+% heroku config:set EMAIL_USERNAME='アドレス@gmail.com'
+% heroku config:set EMAIL_BCC='bccアドレス@gmail.com'
+% heroku config:set EMAIL_PASSWORD='gmailパスワード'
+% heroku config:set EMAIL_SENDER='送信者名 <アドレス@gmail.com>'
+```
+
+登録処理できた.

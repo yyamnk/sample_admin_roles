@@ -27,3 +27,5 @@ ja:
               too_short: "の長さが足りません"
             password_confirmation:
               confirmation: "が一致しません"
+            confirmation_token:
+              invalid: "が一致しません"
