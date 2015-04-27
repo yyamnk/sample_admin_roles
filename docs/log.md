@@ -2737,3 +2737,9 @@ rake db:migrate
 bundle exec rails g scaffold Group name:string group_category:references user:references activity:text first_question:text
 rake db:migrate
 ```
+
+ここまで: `35c6ec5`
+
+# welcome#indexにリンクを追加
+
+
