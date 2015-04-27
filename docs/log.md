@@ -2242,3 +2242,55 @@ bundle exec rails s -e production
 ```
 
 これで動いた.
+
+# herokuへupする
+
+```
+# herokuへログイン
+heroku login
+
+# ssh公開鍵を登録
+heroku keys:add ~/.ssh/id_rsa.pub
+
+# アプリを登録
+heroku apps:create 'sample-admin-roles' --ssh-git
+
+# push
+git push heroku master
+```
+
+これでソースは上がった.
+
+```
+# herokuの環境変数へDBのパスワードを入れる.
+heroku config:set TEST_ADMIN_PERMISSION_DATABASE_PASSWORD=`cat /dev/urandom | LC_CTYPE=C tr -c -d '[:alnum:]' | tr -d 'O0lI1' | head -c 20`
+
+# DB作成
+heroku run rake db:create
+# エラーが出るが, 作成されているみたい
+# 確認は
+heroku pg:info
+=== HEROKU_POSTGRESQL_COPPER_URL (DATABASE_URL)
+Plan:        Hobby-dev
+Status:      Available
+Connections: 0/20
+PG Version:  9.4.1
+Created:     2015-04-26 12:30 UTC
+Data Size:   6.4 MB
+Tables:      0
+Rows:        0/10000 (In compliance)
+Fork/Follow: Unsupported
+Rollback:    Unsupported
+
+# マイグレーション適用
+heroku run rake db:migrate
+# 通らない.
+```
+
+```
+undefined local variable or method `confirmed_at' for #<User:0x007f863af6e128>/app/vendor/bundle/ruby/2.0.0/gems/activemodel-4.2.1/lib/active_model/attribute_methods.rb:433:in `method_missing'
+/app/vendor/bundle/ruby/2.0.0/gems/devise-3.4.1/lib/devise/models/confirmable.rb:88:in `confirmed?'
+/app/vendor/bundle/ruby/2.0.0/gems/devise-3.4.1/lib/devise/models/confirmable.rb:163:in `confirmation_required?'
+```
+
+
