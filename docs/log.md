@@ -2682,3 +2682,17 @@ heroku config:set DEFAULT_URL='herokuアプリのホスト名'
 export DEFAULT_URL='localhost:3000'
 ```
 
+# ActiveAdminの表示修正
+
+これまでやったこと
+
+1. `6cad0d6`: app/admin/user.rbを修正, roleが参照できなくなってることに気づく.
+2. `ffb8d08`: ActiveAdminのリソースを追加してみる.
+3. `3627f49`: roleを参照できるように`foreign_key`を追加して, DB再構成
+
+UserDetailの表示を修正
+
+表示名が正常でない`:grade`, `:user`, `:department`のモデルに`to_s`メソッドを追加.
+
+[参考](http://qiita.com/Sho2010@github/items/94f33081d5c7361d7103)
+

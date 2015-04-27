@@ -7,9 +7,14 @@ class User < ActiveRecord::Base
 
   before_create :set_default_role
 
+  def to_s # aciveAdminで表示名を指定する
+    self.email
+  end
+
   private
 
   def set_default_role
     self.role_id ||= Role.find(3).id  #デフォルトのRole.id
   end
+
 end
