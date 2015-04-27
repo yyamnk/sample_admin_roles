@@ -16,3 +16,14 @@ ja:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒 %Z"
     am: "午前"
     pm: "午後"
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: "はすでに登録されたアドレスです。重複して登録できません"
+            password:
+              too_short: "の長さが足りません"
+            password_confirmation:
+              confirmation: "が一致しません"

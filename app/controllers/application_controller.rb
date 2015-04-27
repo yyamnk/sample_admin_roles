@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   #ログアウト後の遷移先
   def after_sign_out_path_for(resource)
-    admin_root_path
+    root_path
   end
 
   #active_admin配下へ許可されていないユーザがアクセスした場合の遷移先
