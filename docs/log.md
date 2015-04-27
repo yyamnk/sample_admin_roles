@@ -2775,3 +2775,20 @@ RAILS_ENV=production rake assets:precompile
 * 関連の表示をidからname, name_jaへ
 * formで名前から選択へ
 
+
+# ActiveAdminにGroup, GroupCategoryを追加
+
+```
+% bundle exec rails generate active_admin:resource Group
+      create  app/admin/group.rb
+% bundle exec rails generate active_admin:resource GroupCategory
+      create  app/admin/group_category.rb
+```
+
+関連モデルの表示を修正
+
+# fixtures修正
+
+展示のidかぶってた.
+
+#
