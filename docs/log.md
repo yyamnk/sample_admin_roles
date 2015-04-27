@@ -2655,3 +2655,30 @@ Restarting dynos... done
 ```
 
 登録処理できた.
+
+
+# production環境のdefault_url_optionsを環境変数から読み込む
+
+```
+diff --git a/config/environments/production.rb b/config/environments/production.rb
+@@ -95,7 +95,7 @@ Rails.application.configure do
+-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
++  config.action_mailer.default_url_options = { :host => Rails.application.secrets.default_url }
+```
+
+```
+diff --git a/config/secrets.yml b/config/secrets.yml
+@@ -37,3 +37,4 @@ production:
+   email_password: <%= ENV["EMAIL_PASSWORD"] %>
+   email_bcc: <%= ENV["EMAIL_BCC"] %>
+   smtp_tls: <%= ENV["SMTP_TLS"] %>
++  default_url: <%= ENV["DEFAULT_URL"] %>
+```
+
+```
+# for heroku
+heroku config:set DEFAULT_URL='herokuアプリのホスト名'
+# for local
+export DEFAULT_URL='localhost:3000'
+```
+

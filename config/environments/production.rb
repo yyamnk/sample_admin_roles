@@ -95,7 +95,7 @@ Rails.application.configure do
     user_name: Rails.application.secrets.email_username,
     password: Rails.application.secrets.email_password
   }
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { :host => Rails.application.secrets.default_url }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_options = {
     bcc: Rails.application.secrets.email_bcc
