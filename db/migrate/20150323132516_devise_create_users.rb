@@ -1,9 +1,4 @@
 class DeviseCreateUsers < ActiveRecord::Migration
-  def migrate(direction)
-    super
-    # Create a default user
-    User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if direction == :up
-  end
 
   def change
     create_table(:users) do |t|
@@ -25,24 +20,27 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.inet     :current_sign_in_ip
       t.inet     :last_sign_in_ip
 
-      ## Confirmable
-      # t.string   :confirmation_token
-      # t.datetime :confirmed_at
-      # t.datetime :confirmation_sent_at
-      # t.string   :unconfirmed_email # Only if using reconfirmable
+      ## Confirmable, e-mail確認で必要
+      t.string   :confirmation_token
+      t.datetime :confirmed_at
+      t.datetime :confirmation_sent_at
+      t.string   :unconfirmed_email # 確認メールの再送信で必要
 
       ## Lockable
       # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
+      # ユーザ権限
+      t.references :roles, index: true
 
       t.timestamps
     end
 
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
-    # add_index :users, :confirmation_token,   unique: true
+    # Confirmable, e-mail確認で必要
+    add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
   end
 end

@@ -2408,3 +2408,76 @@ diff --git a/app/models/user.rb b/app/models/user.rb
    -> 0.0124s
 == 20150422133839 CreateUserDetails: migrated (0.0125s) =======================
 ```
+
+# マイグレーションファイルを整理
+
+1. Role作成
+    - `*_create_roles.rb`をリネーム, `*_devise_create_users`の前に実行されるように変更
+2. User作成
+    - role_id 追加
+    - confirmations 追加
+    - デフォルトユーザを作成しない
+        * app/models/user.rb, set_default_roleでrole_id=3が無いのでエラー吐く
+3. 残りのモデル作成
+
+```
+# こうした
+        renamed:    db/migrate/20150415172931_create_roles.rb -> db/migrate/20150301000000_create_roles.rb
+        modified:   db/migrate/20150323132516_devise_create_users.rb
+        deleted:    db/migrate/20150414145341_add_confirmable_to_devise.rb
+        deleted:    db/migrate/20150414154550_add_unconfirmed_email_to_user.rb
+        deleted:    db/migrate/20150415171958_add_role_to_users.rb
+        deleted:    db/migrate/20150415173100_add_role_id_to_user.rb
+```
+
+これでマイグレーション
+
+```
+
+```
+% RAILS_ENV=production bundle exec rake db:migrate
+(in /Volumes/Data/Dropbox/nfes15/sample_admin_roles)
+== 20150301000000 CreateRoles: migrating ======================================
+-- create_table(:roles)
+   -> 0.0037s
+== 20150301000000 CreateRoles: migrated (0.0037s) =============================
+
+== 20150323132516 DeviseCreateUsers: migrating ================================
+-- create_table(:users)
+   -> 0.0063s
+-- add_index(:users, :email, {:unique=>true})
+   -> 0.0021s
+-- add_index(:users, :reset_password_token, {:unique=>true})
+   -> 0.0023s
+-- add_index(:users, :confirmation_token, {:unique=>true})
+   -> 0.0030s
+== 20150323132516 DeviseCreateUsers: migrated (0.0140s) =======================
+
+== 20150323132524 CreateActiveAdminComments: migrating ========================
+-- create_table(:active_admin_comments)
+   -> 0.0030s
+-- add_index(:active_admin_comments, [:namespace])
+   -> 0.0022s
+-- add_index(:active_admin_comments, [:author_type, :author_id])
+   -> 0.0026s
+-- add_index(:active_admin_comments, [:resource_type, :resource_id])
+   -> 0.0024s
+== 20150323132524 CreateActiveAdminComments: migrated (0.0107s) ===============
+
+== 20150421143139 CreateDepartments: migrating ================================
+-- create_table(:departments)
+   -> 0.0038s
+== 20150421143139 CreateDepartments: migrated (0.0039s) =======================
+
+== 20150421144117 CreateGrades: migrating =====================================
+-- create_table(:grades)
+   -> 0.0028s
+== 20150421144117 CreateGrades: migrated (0.0029s) ============================
+
+== 20150422133839 CreateUserDetails: migrating ================================
+-- create_table(:user_details)
+   -> 0.0187s
+== 20150422133839 CreateUserDetails: migrated (0.0188s) =======================
+```
+
+デフォルトUserが無いので, 手動で追加する.
