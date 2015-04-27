@@ -5,7 +5,7 @@ class UserDetailsController < ApplicationController
   # GET /user_details
   # GET /user_details.json
   def index
-    @user_details = UserDetail.all
+    @user_details = UserDetail.find_by( user_id: current_user.id )
   end
 
   # GET /user_details/1
@@ -15,7 +15,7 @@ class UserDetailsController < ApplicationController
 
   # GET /user_details/new
   def new
-    @user_detail = UserDetail.new
+    @user_detail = UserDetail.new( user_id: current_user.id )
   end
 
   # GET /user_details/1/edit

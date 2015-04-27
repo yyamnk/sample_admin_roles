@@ -1,6 +1,5 @@
 <%= simple_form_for @user_detail, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.association :user, label_method: :email %>
-  <%= error_span(@user_detail[:user]) %>
+  <%= f.hidden_field :user_id, value: @user_detail[:user_id] %>
   <%= f.input :name_ja %>
   <%= error_span(@user_detail[:name_ja]) %>
   <%= f.input :name_en %>
@@ -14,5 +13,5 @@
 
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                user_details_path, :class => 'btn btn-default' %>
+                welcome_index_path, :class => 'btn btn-default' %>
 <% end %>
