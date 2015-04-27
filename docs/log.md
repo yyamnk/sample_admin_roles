@@ -2716,3 +2716,15 @@ bundle exec rails g migration addUserDetailToUser user:references
 ```
 rake db:migrate
 ```
+
+
+# 参加団体の参加形式用のモデルを作成する
+
+候補は`模擬店, ステージ企画, 展示, その他`
+
+```
+bundle exec rails g model GroupCategory name_ja:string name_en:string
+rake db:migrate
+```
+
+`app/models/group_category.rb`にバリデーション, `to_s`メソッド追加.
