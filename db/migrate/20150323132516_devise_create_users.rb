@@ -32,7 +32,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
 
       # ユーザ権限
-      t.references :roles, index: true
+      t.references :role, index: true, foreign_key: true
 
       t.timestamps
     end
