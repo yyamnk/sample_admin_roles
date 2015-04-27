@@ -2501,3 +2501,141 @@ irb(main):002:0> def_user.save
 
 # メールが飛んでくる
 ```
+
+# herokuのDB再構成
+
+`rebuild`と`master`をマージ
+
+```
+# push!
+% git push heroku master
+
+# heroku 停止!
+% heroku maintenance:on
+Enabling maintenance mode for sample-admin-roles... done
+
+# DB削除
+% heroku pg:reset DATABASE
+
+ !    WARNING: Destructive Action
+ !    This command will affect the app: sample-admin-roles
+ !    To proceed, type "sample-admin-roles" or re-run this command with --confirm sample-admin-roles
+
+> sample-admin-roles
+Resetting HEROKU_POSTGRESQL_COPPER_URL (DATABASE_URL)... done
+
+# 再構成
+% heroku run:detached rake db:migrate
+Running `rake db:migrate` detached... up, run.1963
+Use `heroku logs -p run.1963 -a sample-admin-roles` to view the output.
+
+# マイグレーション通った
+% heroku logs -p run.1963 
+2015-04-27T09:18:46.763404+00:00 heroku[run.1963]: Starting process with command `bundle exec rake db:migrate`
+2015-04-27T09:18:47.468609+00:00 heroku[run.1963]: State changed from starting to up
+2015-04-27T09:18:53.755354+00:00 app[run.1963]: == 20150301000000 CreateRoles: migrating ======================================
+2015-04-27T09:18:53.755380+00:00 app[run.1963]: -- create_table(:roles)
+2015-04-27T09:18:53.755382+00:00 app[run.1963]:    -> 0.0699s
+2015-04-27T09:18:53.755386+00:00 app[run.1963]:
+2015-04-27T09:18:53.755384+00:00 app[run.1963]: == 20150301000000 CreateRoles: migrated (0.0700s) =============================
+2015-04-27T09:18:53.755388+00:00 app[run.1963]: == 20150323132516 DeviseCreateUsers: migrating ================================
+2015-04-27T09:18:53.755389+00:00 app[run.1963]: -- create_table(:users)
+2015-04-27T09:18:53.755391+00:00 app[run.1963]:    -> 0.0879s
+2015-04-27T09:18:53.755395+00:00 app[run.1963]:    -> 0.0335s
+2015-04-27T09:18:53.755398+00:00 app[run.1963]:    -> 0.0312s
+2015-04-27T09:18:53.755400+00:00 app[run.1963]: -- add_index(:users, :confirmation_token, {:unique=>true})
+2015-04-27T09:18:53.755396+00:00 app[run.1963]: -- add_index(:users, :reset_password_token, {:unique=>true})
+2015-04-27T09:18:53.755401+00:00 app[run.1963]:    -> 0.0388s
+2015-04-27T09:18:53.755393+00:00 app[run.1963]: -- add_index(:users, :email, {:unique=>true})
+2015-04-27T09:18:53.755403+00:00 app[run.1963]: == 20150323132516 DeviseCreateUsers: migrated (0.1918s) =======================
+2015-04-27T09:18:53.755405+00:00 app[run.1963]:
+2015-04-27T09:18:53.755406+00:00 app[run.1963]: == 20150323132524 CreateActiveAdminComments: migrating ========================
+2015-04-27T09:18:53.755408+00:00 app[run.1963]: -- create_table(:active_admin_comments)
+2015-04-27T09:18:53.755414+00:00 app[run.1963]: -- add_index(:active_admin_comments, [:author_type, :author_id])
+2015-04-27T09:18:53.755409+00:00 app[run.1963]:    -> 0.0520s
+2015-04-27T09:18:53.755411+00:00 app[run.1963]: -- add_index(:active_admin_comments, [:namespace])
+2015-04-27T09:18:53.755412+00:00 app[run.1963]:    -> 0.0300s
+2015-04-27T09:18:53.755416+00:00 app[run.1963]:    -> 0.0278s
+2015-04-27T09:18:53.755417+00:00 app[run.1963]: -- add_index(:active_admin_comments, [:resource_type, :resource_id])
+2015-04-27T09:18:53.755419+00:00 app[run.1963]:    -> 0.0278s
+2015-04-27T09:18:53.755420+00:00 app[run.1963]: == 20150323132524 CreateActiveAdminComments: migrated (0.1380s) ===============
+2015-04-27T09:18:53.755422+00:00 app[run.1963]:
+2015-04-27T09:18:53.755423+00:00 app[run.1963]: == 20150421143139 CreateDepartments: migrating ================================
+2015-04-27T09:18:53.755425+00:00 app[run.1963]: -- create_table(:departments)
+2015-04-27T09:18:53.755427+00:00 app[run.1963]:    -> 0.0494s
+2015-04-27T09:18:53.755428+00:00 app[run.1963]: == 20150421143139 CreateDepartments: migrated (0.0495s) =======================
+2015-04-27T09:18:53.755430+00:00 app[run.1963]:
+2015-04-27T09:18:53.755431+00:00 app[run.1963]: == 20150421144117 CreateGrades: migrating =====================================
+2015-04-27T09:18:53.755434+00:00 app[run.1963]:    -> 0.0489s
+2015-04-27T09:18:53.755432+00:00 app[run.1963]: -- create_table(:grades)
+2015-04-27T09:18:53.755435+00:00 app[run.1963]: == 20150421144117 CreateGrades: migrated (0.0490s) ============================
+2015-04-27T09:18:53.755437+00:00 app[run.1963]:
+2015-04-27T09:18:53.755439+00:00 app[run.1963]: == 20150422133839 CreateUserDetails: migrating ================================
+2015-04-27T09:18:53.755440+00:00 app[run.1963]: -- create_table(:user_details)
+2015-04-27T09:18:53.755442+00:00 app[run.1963]:    -> 0.1686s
+2015-04-27T09:18:53.755444+00:00 app[run.1963]: == 20150422133839 CreateUserDetails: migrated (0.1687s) =======================
+2015-04-27T09:18:53.755446+00:00 app[run.1963]:
+2015-04-27T09:18:54.537639+00:00 heroku[run.1963]: State changed from up to complete
+2015-04-27T09:18:54.524209+00:00 heroku[run.1963]: Process exited with status 0
+
+# 初期データも入れる
+% heroku run:detached rake db:seed_fu
+Running `rake db:seed_fu` detached... up, run.4069
+Use `heroku logs -p run.4069 -a sample-admin-roles` to view the output.
+
+# 入った
+% heroku logs -p run.4069
+2015-04-27T09:20:56.418151+00:00 heroku[run.4069]: Starting process with command `bundle exec rake db:seed_fu`
+2015-04-27T09:20:56.989368+00:00 heroku[run.4069]: State changed from starting to up
+2015-04-27T09:21:03.193032+00:00 app[run.4069]:  - Department {:id=>4, :name_ja=>"[学部]材料開発工学課程"}
+2015-04-27T09:21:03.193033+00:00 app[run.4069]:  - Department {:id=>5, :name_ja=>"[学部]建設工学課程"}
+2015-04-27T09:21:03.193038+00:00 app[run.4069]:  - Department {:id=>8, :name_ja=>"[学部]経営情報システム工学課程"}
+2015-04-27T09:21:03.193035+00:00 app[run.4069]:  - Department {:id=>6, :name_ja=>"[学部]環境システム工学課程"}
+2015-04-27T09:21:03.193025+00:00 app[run.4069]: == Seed from /app/db/fixtures/department.rb
+2015-04-27T09:21:03.193027+00:00 app[run.4069]:  - Department {:id=>1, :name_ja=>"[学部]配属前"}
+2015-04-27T09:21:03.193036+00:00 app[run.4069]:  - Department {:id=>7, :name_ja=>"[学部]生物機能工学課程"}
+2015-04-27T09:21:03.193029+00:00 app[run.4069]:  - Department {:id=>2, :name_ja=>"[学部]機械創造工学課程"}
+2015-04-27T09:21:03.193030+00:00 app[run.4069]:  - Department {:id=>3, :name_ja=>"[学部]電気電子情報工学課程"}
+2015-04-27T09:21:03.193040+00:00 app[run.4069]:  - Department {:id=>9, :name_ja=>"[修士]機械創造工学専攻"}
+2015-04-27T09:21:03.193041+00:00 app[run.4069]:  - Department {:id=>10, :name_ja=>"[修士]電気電子情報工学専攻"}
+2015-04-27T09:21:03.193043+00:00 app[run.4069]:  - Department {:id=>11, :name_ja=>"[修士]材料開発工学専攻"}
+2015-04-27T09:21:03.193044+00:00 app[run.4069]:  - Department {:id=>12, :name_ja=>"[修士]建設工学専攻"}
+2015-04-27T09:21:03.193045+00:00 app[run.4069]:  - Department {:id=>13, :name_ja=>"[修士]環境システム工学専攻"}
+2015-04-27T09:21:03.193047+00:00 app[run.4069]:  - Department {:id=>14, :name_ja=>"[修士]生物機能工学専攻"}
+2015-04-27T09:21:03.193048+00:00 app[run.4069]:  - Department {:id=>15, :name_ja=>"[修士]経営情報システム工学専攻"}
+2015-04-27T09:21:03.193050+00:00 app[run.4069]:  - Department {:id=>16, :name_ja=>"[修士]原子力システム安全工学専攻"}
+2015-04-27T09:21:03.193051+00:00 app[run.4069]:  - Department {:id=>17, :name_ja=>"[博士]情報・制御工学専攻"}
+2015-04-27T09:21:03.193052+00:00 app[run.4069]:  - Department {:id=>18, :name_ja=>"[博士]材料工学専攻"}
+2015-04-27T09:21:03.193054+00:00 app[run.4069]:  - Department {:id=>19, :name_ja=>"[博士]エネルギー・環境工学専攻"}
+2015-04-27T09:21:03.193055+00:00 app[run.4069]:  - Department {:id=>20, :name_ja=>"[博士]生物統合工学専攻"}
+2015-04-27T09:21:03.193059+00:00 app[run.4069]:
+2015-04-27T09:21:03.193065+00:00 app[run.4069]:  - Grade {:id=>3, :name=>"B3"}
+2015-04-27T09:21:03.193061+00:00 app[run.4069]: == Seed from /app/db/fixtures/grade.rb
+2015-04-27T09:21:03.193062+00:00 app[run.4069]:  - Grade {:id=>1, :name=>"B1"}
+2015-04-27T09:21:03.193063+00:00 app[run.4069]:  - Grade {:id=>2, :name=>"B2"}
+2015-04-27T09:21:03.193058+00:00 app[run.4069]:  - Department {:id=>22, :name_ja=>"[他]該当なし"}
+2015-04-27T09:21:03.193005+00:00 app[run.4069]:
+2015-04-27T09:21:03.193057+00:00 app[run.4069]:  - Department {:id=>21, :name_ja=>"[博士]システム安全専攻"}
+2015-04-27T09:21:03.193081+00:00 app[run.4069]:  - Role {:id=>3, :name=>"user"}
+2015-04-27T09:21:03.193070+00:00 app[run.4069]:  - Grade {:id=>7, :name=>"D1"}
+2015-04-27T09:21:03.193071+00:00 app[run.4069]:  - Grade {:id=>8, :name=>"D2"}
+2015-04-27T09:21:03.193073+00:00 app[run.4069]:  - Grade {:id=>9, :name=>"D3"}
+2015-04-27T09:21:03.193074+00:00 app[run.4069]:  - Grade {:id=>10, :name=>"その他, other"}
+2015-04-27T09:21:03.193075+00:00 app[run.4069]:
+2015-04-27T09:21:03.193076+00:00 app[run.4069]: == Seed from /app/db/fixtures/role.rb
+2015-04-27T09:21:03.193078+00:00 app[run.4069]:  - Role {:id=>1, :name=>"developer"}
+2015-04-27T09:21:03.193080+00:00 app[run.4069]:  - Role {:id=>2, :name=>"manager"}
+2015-04-27T09:21:03.193066+00:00 app[run.4069]:  - Grade {:id=>4, :name=>"B4"}
+2015-04-27T09:21:03.193067+00:00 app[run.4069]:  - Grade {:id=>5, :name=>"M1"}
+2015-04-27T09:21:03.193069+00:00 app[run.4069]:  - Grade {:id=>6, :name=>"M2"}
+
+# 再開
+% heroku maintenance:off
+Disabling maintenance mode for sample-admin-roles... done
+
+# 一応, 再起動
+% heroku restart
+Restarting dynos... done
+```
+
+`heroku open`でアプリが起動しているのを確認
