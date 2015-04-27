@@ -2746,3 +2746,5 @@ rake db:migrate
 
 `db/fixtures/group_category.rb`書いた.
 `rake db:seed_fu`
+
+# Gropにバリデーション追加
