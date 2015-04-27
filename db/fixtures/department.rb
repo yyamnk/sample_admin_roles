@@ -21,5 +21,5 @@ Department.seed( :id,
   { id: 19 , name_ja: '[博士]エネルギー・環境工学専攻' }   ,
   { id: 20 , name_ja: '[博士]生物統合工学専攻' }           ,
   { id: 21 , name_ja: '[博士]システム安全専攻' }           ,
-  { id: 22 , name_ja: '[他]不明' }
+  { id: 22 , name_ja: '[他]該当なし' }
 )
