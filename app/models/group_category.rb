@@ -1,5 +1,7 @@
 class GroupCategory < ActiveRecord::Base
 
+  has_many :groups
+
   # 必須入力
   validates :name_ja, presence: true
   # あとでname_enもたす

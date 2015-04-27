@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :registerable, :confirmable
   belongs_to :role      # Userからroleを参照可能にする, ex) User.find(1).role
   has_one :user_detail  # UserからUserDetailを参照可能にする
+  has_many :groups
 
   before_create :set_default_role
 

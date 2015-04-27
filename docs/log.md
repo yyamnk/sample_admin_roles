@@ -2728,3 +2728,12 @@ rake db:migrate
 ```
 
 `app/models/group_category.rb`にバリデーション, `to_s`メソッド追加.
+
+ここまで: `7a6fbc4`
+
+# 参加団体登録用にscaffold
+
+```
+bundle exec rails g scaffold Group name:string group_category:references user:references activity:text first_question:text
+rake db:migrate
+```

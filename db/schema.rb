@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150427171444) do
+ActiveRecord::Schema.define(version: 20150427173406) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,19 @@ ActiveRecord::Schema.define(version: 20150427171444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "name",              null: false
+    t.integer  "group_category_id"
+    t.integer  "user_id"
+    t.text     "activity"
+    t.text     "first_question"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "groups", ["group_category_id"], name: "index_groups_on_group_category_id", using: :btree
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name",       null: false
@@ -99,6 +112,8 @@ ActiveRecord::Schema.define(version: 20150427171444) do
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
   add_index "users", ["user_detail_id"], name: "index_users_on_user_detail_id", using: :btree
 
+  add_foreign_key "groups", "group_categories"
+  add_foreign_key "groups", "users"
   add_foreign_key "user_details", "departments"
   add_foreign_key "user_details", "grades"
   add_foreign_key "user_details", "users"
