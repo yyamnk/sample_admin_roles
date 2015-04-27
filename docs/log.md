@@ -2767,3 +2767,11 @@ RAILS_ENV=production rake db:migrate
 RAILS_ENV=production rake db:seed_fu
 RAILS_ENV=production rake assets:precompile 
 ```
+
+# Group 修正
+
+変更
+* Controllerでuser_idを取得
+* 関連の表示をidからname, name_jaへ
+* formで名前から選択へ
+

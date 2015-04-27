@@ -7,9 +7,7 @@
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @group.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:group_category_id) %>:</strong></dt>
-  <dd><%= @group.group_category_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
-  <dd><%= @group.user_id %></dd>
+  <dd><%= @group.group_category.name_ja %></dd>
   <dt><strong><%= model_class.human_attribute_name(:activity) %>:</strong></dt>
   <dd><%= @group.activity %></dd>
   <dt><strong><%= model_class.human_attribute_name(:first_question) %>:</strong></dt>

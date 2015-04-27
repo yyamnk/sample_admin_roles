@@ -1,10 +1,9 @@
 <%= simple_form_for @group, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.hidden_field :user_id, value: @group[:user_id] %>
   <%= f.input :name %>
   <%= error_span(@group[:name]) %>
-  <%= f.input :group_category_id %>
+  <%= f.association :group_category %>
   <%= error_span(@group[:group_category_id]) %>
-  <%= f.input :user_id %>
-  <%= error_span(@group[:user_id]) %>
   <%= f.input :activity %>
   <%= error_span(@group[:activity]) %>
   <%= f.input :first_question %>
