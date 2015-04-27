@@ -2293,4 +2293,118 @@ undefined local variable or method `confirmed_at' for #<User:0x007f863af6e128>/a
 /app/vendor/bundle/ruby/2.0.0/gems/devise-3.4.1/lib/devise/models/confirmable.rb:163:in `confirmation_required?'
 ```
 
+# 0からmignateできない問題を修正
 
+該当のメソッドを使わないようにmodelを修正する.
+
+```
+git branch rebuild
+git checkout rebuild
+```
+
+```
+diff --git a/app/models/user.rb b/app/models/user.rb
+   devise :database_authenticatable,
+-         :recoverable, :rememberable, :trackable, :validatable, :registerable, :confirmable
++         # :recoverable, :rememberable, :trackable, :validatable, :registerable, :confirmable
++         :recoverable, :rememberable, :trackable, :validatable, :registerable
+```
+
+oh...
+
+```
+undefined method `role_id' for #<User:0x007fae1212ee78>/Volumes/Data/Dropbox/nfes15/sample_admin_roles/vendor/bundle/ruby/2.2.0/gems/activemodel-4.2.1/lib/active_model/attribute_methods.rb:433:in `method_missing'
+/Volumes/Data/Dropbox/nfes15/sample_admin_roles/app/models/user.rb:14:in `set_default_role'
+```
+
+modelで, User保存時に`before_create` -> `set_default_role`で処理している.
+`db/migrate/20150323132516_devise_create_users.rb`の段階では`Role`モデルが存在しない.
+これでエラー.
+
+```
+diff --git a/app/models/user.rb b/app/models/user.rb
+   # Include default devise modules. Others available are:
+   # :confirmable, :lockable, :timeoutable and :omniauthable
+   devise :database_authenticatable,
+-         :recoverable, :rememberable, :trackable, :validatable, :registerable, :confirmable
+-  belongs_to :role # Userからroleを参照可能にする, ex) User.find(1).role
++         # :recoverable, :rememberable, :trackable, :validatable, :registerable, :confirmable
++         :recoverable, :rememberable, :trackable, :validatable, :registerable
++  # belongs_to :role # Userからroleを参照可能にする, ex) User.find(1).role
+
+-  before_create :set_default_role
++  # before_create :set_default_role
+```
+
+とおった.
+
+```
+% RAILS_ENV=production bundle exec rake db:migrate
+== 20150323132516 DeviseCreateUsers: migrating ================================
+-- create_table(:users)
+   -> 0.0082s
+-- add_index(:users, :email, {:unique=>true})
+   -> 0.0028s
+-- add_index(:users, :reset_password_token, {:unique=>true})
+   -> 0.0021s
+== 20150323132516 DeviseCreateUsers: migrated (0.0133s) =======================
+
+== 20150323132524 CreateActiveAdminComments: migrating ========================
+-- create_table(:active_admin_comments)
+   -> 0.0037s
+-- add_index(:active_admin_comments, [:namespace])
+   -> 0.0023s
+-- add_index(:active_admin_comments, [:author_type, :author_id])
+   -> 0.0022s
+-- add_index(:active_admin_comments, [:resource_type, :resource_id])
+   -> 0.0023s
+== 20150323132524 CreateActiveAdminComments: migrated (0.0107s) ===============
+
+== 20150414145341 AddConfirmableToDevise: migrating ===========================
+-- add_column(:users, :confirmation_token, :string)
+   -> 0.0009s
+-- add_column(:users, :confirmed_at, :datetime)
+   -> 0.0003s
+-- add_column(:users, :confirmation_sent_at, :datetime)
+   -> 0.0004s
+-- add_index(:users, :confirmation_token, {:unique=>true})
+   -> 0.0023s
+-- execute("UPDATE users SET confirmed_at = NOW()")
+   -> 0.0012s
+== 20150414145341 AddConfirmableToDevise: migrated (0.0053s) ==================
+
+== 20150414154550 AddUnconfirmedEmailToUser: migrating ========================
+-- add_column(:users, :unconfirmed_email, :string)
+   -> 0.0006s
+== 20150414154550 AddUnconfirmedEmailToUser: migrated (0.0006s) ===============
+
+== 20150415171958 AddRoleToUsers: migrating ===================================
+-- add_column(:users, :role, :string)
+   -> 0.0005s
+== 20150415171958 AddRoleToUsers: migrated (0.0006s) ==========================
+
+== 20150415172931 CreateRoles: migrating ======================================
+-- create_table(:roles)
+   -> 0.0026s
+== 20150415172931 CreateRoles: migrated (0.0027s) =============================
+
+== 20150415173100 AddRoleIdToUser: migrating ==================================
+-- add_reference(:users, :role, {:index=>true, :foreign_key=>true})
+   -> 0.0105s
+== 20150415173100 AddRoleIdToUser: migrated (0.0106s) =========================
+
+== 20150421143139 CreateDepartments: migrating ================================
+-- create_table(:departments)
+   -> 0.0043s
+== 20150421143139 CreateDepartments: migrated (0.0044s) =======================
+
+== 20150421144117 CreateGrades: migrating =====================================
+-- create_table(:grades)
+   -> 0.0040s
+== 20150421144117 CreateGrades: migrated (0.0041s) ============================
+
+== 20150422133839 CreateUserDetails: migrating ================================
+-- create_table(:user_details)
+   -> 0.0124s
+== 20150422133839 CreateUserDetails: migrated (0.0125s) =======================
+```
