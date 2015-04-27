@@ -1,16 +1,13 @@
 ActiveAdmin.register UserDetail do
-
+  permit_params :user, :name_ja, :name_en, :tel, :user_id, :grade_id, :department_id
   actions :all, :except => [:destroy] # destory以外はOKにする
 
   index do
     selectable_column
     id_column
-    column :name_ja do |detail|
-      link_to detail.name_ja, admin_user_path(detail.user_id)
-    end
-    column :name_en do |detail|
-      link_to detail.name_en, admin_user_path(detail.user_id)
-    end
+    column :user
+    column :name_ja
+    column :name_en
     column :grade
     column :department
     column :tel
@@ -20,8 +17,6 @@ ActiveAdmin.register UserDetail do
 
   form do |f|
     f.inputs "User Details" do
-      # f.input :user_id, collection: User.all
-      # f.input :user, collection: User.all.select( :email, :id)
       f.input :user
       f.input :name_ja
       f.input :name_en

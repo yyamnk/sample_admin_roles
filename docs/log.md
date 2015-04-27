@@ -2696,3 +2696,11 @@ UserDetailの表示を修正
 
 [参考](http://qiita.com/Sho2010@github/items/94f33081d5c7361d7103)
 
+
+# ActiveAdminでform登録時にバリデートがかかるようにする.
+
+
+不正な値で登録をかけると`raise ActiveModel::ForbiddenAttributesError`が出ている.
+`stropng parameter`が不適切らしい.
+
+`app/admin/user_detail.rb`を修正.
