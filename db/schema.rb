@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150422133839) do
+ActiveRecord::Schema.define(version: 20150427161307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,15 +83,18 @@ ActiveRecord::Schema.define(version: 20150422133839) do
     t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_detail_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
+  add_index "users", ["user_detail_id"], name: "index_users_on_user_detail_id", using: :btree
 
   add_foreign_key "user_details", "departments"
   add_foreign_key "user_details", "grades"
   add_foreign_key "user_details", "users"
   add_foreign_key "users", "roles"
+  add_foreign_key "users", "user_details"
 end

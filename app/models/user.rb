@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :registerable, :confirmable
-  belongs_to :role # Userからroleを参照可能にする, ex) User.find(1).role
+  belongs_to :role      # Userからroleを参照可能にする, ex) User.find(1).role
+  has_one :user_detail  # UserからUserDetailを参照可能にする
 
   before_create :set_default_role
 

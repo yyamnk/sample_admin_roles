@@ -2704,3 +2704,15 @@ UserDetailの表示を修正
 `stropng parameter`が不適切らしい.
 
 `app/admin/user_detail.rb`を修正.
+
+# UserからUserDetailを参照可能にする
+
+```
+bundle exec rails g migration addUserDetailToUser user:references
+```
+
+でマイグレーション作成, 調整
+
+```
+rake db:migrate
+```
