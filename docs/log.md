@@ -2742,4 +2742,7 @@ rake db:migrate
 
 # welcome#indexにリンクを追加
 
+# GroupCategoryに初期値投入
 
+`db/fixtures/group_category.rb`書いた.
+`rake db:seed_fu`
