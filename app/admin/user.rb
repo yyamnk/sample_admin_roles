@@ -1,11 +1,13 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation, :role_id
+  permit_params :email, :password, :password_confirmation, :roles_id
 
   index do
     selectable_column
     id_column
     column :email
-    column :role
+    column :roles_id do |role|
+      link_to user.role.name, admin_role_path(role)
+    end
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
@@ -25,7 +27,7 @@ ActiveAdmin.register User do
       # パスワード編集用のページを新しく作るべきかも.
       # f.input :password
       # f.input :password_confirmation
-      f.input :role
+      f.input :roles_id
     end
     f.actions
   end
