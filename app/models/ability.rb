@@ -42,6 +42,8 @@ class Ability
       #
       # UserDetailの自分のレコードは作成, 更新, 読みが可能. 削除はだめ.
       can [:read, :create, :update], UserDetail, :user_id => user.id
+      # 所有するGroupのレコードは自由に触れる
+      can :manage, Group, :user_id => user.id
     end
 
   end

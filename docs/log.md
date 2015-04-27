@@ -2791,4 +2791,7 @@ RAILS_ENV=production rake assets:precompile
 
 展示のidかぶってた.
 
-#
+# Groupをuser_idで権限管理.
+
+Abilityに追記.
+ついでにUserDetail#indexも修正

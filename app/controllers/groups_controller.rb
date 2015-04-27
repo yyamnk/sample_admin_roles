@@ -1,10 +1,11 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # for cancancan
 
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
+    @groups = Group.where( user_id: current_user.id )
   end
 
   # GET /groups/1
