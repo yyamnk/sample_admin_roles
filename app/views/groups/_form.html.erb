@@ -1,15 +1,16 @@
-<%= simple_form_for(@group) do |f| %>
-  <%= f.error_notification %>
+<%= simple_form_for @group, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :name %>
+  <%= error_span(@group[:name]) %>
+  <%= f.input :group_category_id %>
+  <%= error_span(@group[:group_category_id]) %>
+  <%= f.input :user_id %>
+  <%= error_span(@group[:user_id]) %>
+  <%= f.input :activity %>
+  <%= error_span(@group[:activity]) %>
+  <%= f.input :first_question %>
+  <%= error_span(@group[:first_question]) %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.association :group_category %>
-    <%= f.association :user %>
-    <%= f.input :activity %>
-    <%= f.input :first_question %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                groups_path, :class => 'btn btn-default' %>
 <% end %>

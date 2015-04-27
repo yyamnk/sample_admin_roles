@@ -2748,3 +2748,14 @@ rake db:migrate
 `rake db:seed_fu`
 
 # Gropにバリデーション追加
+
+# Groupにbootstrap適用
+
+```
+% bundle exec rails g bootstrap:themed Groups
+      create  app/views/groups/index.html.erb
+      create  app/views/groups/new.html.erb
+      create  app/views/groups/edit.html.erb
+      create  app/views/groups/_form.html.erb
+      create  app/views/groups/show.html.erb
+```
