@@ -33,10 +33,10 @@ class Ability
     user ||= User.new # guest user (not logged in)
     cannot :manage, :all
 
-    if user.role_id == 1 then # for developer
+    if user.roles_id == 1 then # for developer
       can :manage, :all
     end
-    if user.role_id == 3 then # for user
+    if user.roles_id == 3 then # for user
       can :manage, :welcome
       # emailのconfirmが終わっていれば
       #

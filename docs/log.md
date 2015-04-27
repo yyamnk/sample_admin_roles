@@ -2481,3 +2481,23 @@ diff --git a/app/models/user.rb b/app/models/user.rb
 ```
 
 デフォルトUserが無いので, 手動で追加する.
+
+
+# マイグレーションにあわさてモデルを修正.
+
+ユーザの追加ができなかった.
+ユーザ権限を`t.reference :roles`で追加したため, モデルのカラムが`role_id` -> `roles_id`に変更された.
+
+これに合わせて各モデルを修正.
+
+コンソールから管理ユーザ( roles_id: 1)を登録できることを確認.
+
+```
+% bundle exec rails c
+Loading development environment (Rails 4.2.1)
+irb(main):001:0> def_user = User.new( email: 'アドレス@gmail.com', password: 'パスワード', roles_id: 1 )
+=> #<User id: nil, email: "y.yamnk@gmail.com", encrypted_password: "$2a$10$VuRnP7yyNzVC9QarEKOtNe7b95uKnbEIowgw5WtrVe....", reset_password_token: nil, reset_password_sent_at: nil, remember_created_at: nil, sign_in_count: 0, current_sign_in_at: nil, last_sign_in_at: nil, current_sign_in_ip: nil, last_sign_in_ip: nil, confirmation_token: nil, confirmed_at: nil, confirmation_sent_at: nil, unconfirmed_email: nil, roles_id: 1, created_at: nil, updated_at: nil>
+irb(main):002:0> def_user.save
+
+# メールが飛んでくる
+```

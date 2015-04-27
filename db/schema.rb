@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150422133839) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -76,23 +76,21 @@ ActiveRecord::Schema.define(version: 20150422133839) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "role"
-    t.integer  "role_id"
+    t.integer  "roles_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
+  add_index "users", ["roles_id"], name: "index_users_on_roles_id", using: :btree
 
   add_foreign_key "user_details", "departments"
   add_foreign_key "user_details", "grades"
   add_foreign_key "user_details", "users"
-  add_foreign_key "users", "roles"
 end

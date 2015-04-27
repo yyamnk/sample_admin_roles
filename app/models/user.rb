@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
   private
 
   def set_default_role
-    self.role_id ||= Role.find(3).id  #デフォルトのRole.id
+    self.roles_id ||= Role.find(3).id  #デフォルトのRole.id
   end
 end
