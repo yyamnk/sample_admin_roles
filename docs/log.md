@@ -2811,3 +2811,13 @@ Abilityに追記.
 # ユーザ詳細をナビゲーションバーからアクセスできるように変更
 
 `app/views/layouts/application.html.erb`で要素を追加
+
+
+# ユーザ登録時にデザインが崩れるのを修正
+
+継承するクラスが間違っていた.
+`admin/`まわりはActiveAdminのテンプレートを使っている.
+deviseのチュートリアルで独自コントローラを実装した時,
+`RegistrationsController`は`Devise::RegistrationsController`を継承していた.
+これを`ActiveAdmin::Devise::RegistrationsController`に修正.
+
