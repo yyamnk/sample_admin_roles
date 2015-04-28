@@ -48,20 +48,23 @@
         <a class="navbar-brand" href="#">SampleAdminRoles</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Dashboard", "/welcome/index", :class => 'btn' %></li>
-            <li>
-              <% if user_signed_in? %>
+            <li><%= link_to "Dashboard", "/welcome/index", class: 'btn' %></li>
+            <% if user_signed_in? %>
+              <li>
                 <% @user_detail = UserDetail.find_by(user_id: current_user.id) %>
                 <% if @user_detail.present? %>
-                  <%= link_to "User info", user_detail_path(@user_detail) %>
+                  <%= link_to "User info", user_detail_path(@user_detail), class: 'btn' %>
                 <% end %>
+              </li>
+              <% if current_user.role.id < 3 %>
+                <li>
+                <%= link_to "管理者用", admin_dashboard_path, class: 'btn' %>
+                </li>
               <% end %>
-            </li>
-            <li>
-              <% if user_signed_in? %>
-                <%= link_to "Log out", destroy_user_session_path, :method => :delete  %>
-              <% end %>
-            </li>
+              <li>
+                <%= link_to "Log out", destroy_user_session_path, method: :delete, class: 'btn' %>
+              </li>
+            <% end %>
           </ul>
         </div>
       </div>
@@ -76,7 +79,7 @@
       </div><!--/row-->
 
       <footer>
-        <p>&copy; Company 2015</p>
+        <p>&copy; 技大祭実行委員会 2015</p>
       </footer>
 
     </div> <!-- /container -->
