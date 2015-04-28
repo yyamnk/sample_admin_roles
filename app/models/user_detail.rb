@@ -8,7 +8,8 @@ class UserDetail < ActiveRecord::Base
 
   validates :user_id, uniqueness: true                     # 重複不可
   validates :name_en, format: { with: /\A[a-zA-Z\s]+\z/i } # 半角英字と半角スペースのみ
-  validates :tel,     format: { with: /\A[0-9-]+\z/i }     # 半角数字とハイフンのみ
+  # tel -> 半角数字とハイフンのみ, ( [333-4444-4444, for 携帯], [4444-22-4444, for 固定] )
+  validates :tel,     format: { with: /(\A\d{3}-\d{4}-\d{4}+\z)|(\A\d{4}-\d{2}-\d{4})+\z/i }
 
   def to_s # aciveAdminで表示名を指定する
     self.name_ja
