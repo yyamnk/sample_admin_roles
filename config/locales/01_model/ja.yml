@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    models:
+      group: 参加団体
+      user_detail: ユーザ情報
+    attributes:
+        group:
+          name: 団体名称
+          group_category: 参加形態
+          activity: 主な活動内容
+          first_question: 質問・要望など
+        user_detail:
+          name_ja: 名前
+          name_en: Name
+          department: 所属
+          grade: 学年
+          tel: 電話番号

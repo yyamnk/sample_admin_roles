@@ -2795,3 +2795,9 @@ RAILS_ENV=production rake assets:precompile
 
 Abilityに追記.
 ついでにUserDetail#indexも修正
+
+# 日本語化
+
+[ココ](http://qiita.com/awakia/items/cab830238bbfaa924f02)を参考にする.
+`config/locales/00_base/ja.yml`)でエラーは日本語化できたみたい.
+
