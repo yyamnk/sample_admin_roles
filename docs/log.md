@@ -2799,5 +2799,11 @@ Abilityに追記.
 # 日本語化
 
 [ココ](http://qiita.com/awakia/items/cab830238bbfaa924f02)を参考にする.
-`config/locales/00_base/ja.yml`)でエラーは日本語化できたみたい.
+`config/locales/00_base/ja.yml`でエラーは日本語化できたみたい.
+`config/locales/01_model/ja.yml`にモデル関連の辞書を書いとく
 
+# サインイン後のユーザに表示するviewを分離
+
+これまでは`app/views/welcome/index.html.erb`で条件分岐していた.
+これを`app/controllers/welcome_controller.rb`で分離し,
+ユーザ情報が未登録のユーザには`app/views/welcome/regist_user_detail.html.erb`を表示する

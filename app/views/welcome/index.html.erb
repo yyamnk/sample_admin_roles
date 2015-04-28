@@ -1,23 +1,16 @@
-<h1>Dashboard</h1>
+<%= render 'dashboard' %>
 
-<% if @user_detail.nil? %>
-  <%= "ようこそ #{@user.email} さん" %>
-<% else %>
-  <%= "ようこそ #{@user_detail.name_ja} さん" %>
-<% end %>
-
-<p>ここでは技大祭の情報登録, 管理が可能です.</p>
-
-<% if @user_detail.nil? %>
-  <% # まず連絡先を登録させる %>
-  <p>各種手続の前にユーザ情報をご登録ください.</p>
-  <p><%= link_to "ユーザ情報の登録", new_user_detail_path %></p>
-<% else %>
-  <% # 連絡先の編集は許可 %>
-  <p><%= link_to "ユーザ情報の更新", edit_user_detail_path(@user_detail) %></p>
-<% end %>
-
-<% if @user_detail.present? %>
-  <p><%= link_to "参加団体の登録", new_group_path %></p>
-  <p><%= link_to "登録済み参加団体一覧", groups_path %></p>
-<% end %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">参加団体 申請</h3>
+  </div>
+  <div class="panel-body">
+    模擬店, 展示, ステージ企画などを希望する団体はこちら。
+    <%= link_to t('welcome_controller.group.index'),
+            groups_path,
+            :class => 'btn btn-default' %>
+    <%= link_to t('welcome_controller.group.new'),
+            new_group_path,
+            :class => 'btn btn-primary' %>
+  </div>
+</div>

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :groups
   resources :user_details
   get 'welcome/index'
+  get 'welcome/regist_user_detail'
 
   # deviseのコントローラーをoverrideしたい.
   # ActiveAdmin::Devise.configを上書きする

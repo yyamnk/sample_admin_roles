@@ -1,0 +1,13 @@
+<% # まず連絡先を登録させる %>
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title">ユーザ情報の登録が必要です。</h3>
+  </div>
+  <div class="panel-body">
+    <p>ようこそ技大祭登録システムへ</p>
+    各種申請の前にユーザ情報をご登録ください。
+    <%= link_to t('welcome_controller.user.new'),
+            new_user_detail_path,
+            :class => 'btn btn-danger' %>
+  </div>
+</div>

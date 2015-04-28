@@ -1,0 +1,8 @@
+ja:
+  welcome_controller:
+    user:
+      edit: 編集
+      new: 登録
+    group:
+      new: 新規登録
+      index: 一覧
