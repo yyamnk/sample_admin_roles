@@ -2821,3 +2821,23 @@ deviseのチュートリアルで独自コントローラを実装した時,
 `RegistrationsController`は`Devise::RegistrationsController`を継承していた.
 これを`ActiveAdmin::Devise::RegistrationsController`に修正.
 
+
+
+# deviseのe-mailを日本語化する
+
+[参考](http://qiita.com/lassy423/items/b2bb8763d899617c27f0)
+
+> これで、Devise がメールを送る場合に探し出すテンプレートファイルの順番が
+> app/views/users/mailer/ja
+> app/views/users/mailer
+> devise/mailer
+> に変わるので、ja ファイルの下に日本語で書かれたテンプレートファイルを置く。
+
+うまくいかない.
+
+[ここ](https://github.com/plataformatec/devise/wiki/How-To:-Use-custom-mailer)
++
+[ココ](http://stackoverflow.com/questions/21446631/changed-devise-mailer-template-path-now-devise-invitables-e-mail-subject-lines)
+でやる.
+
+

@@ -1,0 +1,9 @@
+<p><%= @email %>さま</p>
+
+<p>技大祭実行委員会です。</p>
+<p>システムへご登録いただきましてありがとうございます。</p>
+
+<p>ご登録いただいたメールアドレスの確認が必要です。</p>
+<p>下記リンクよりシステムへアクセスをお願いします。</p>
+
+<p><%= link_to 'Confirm e-mail', confirmation_url(@resource, confirmation_token: @token) %></p>

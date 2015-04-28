@@ -16,6 +16,9 @@ Devise.setup do |config|
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
+  # Deviseのメーラーをextendして独自実装する
+  config.mailer = 'Users::Mailer' # app/controllers/users/mailer.rb
+  #
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
@@ -258,4 +261,6 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+  #
+
 end
