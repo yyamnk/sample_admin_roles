@@ -4,6 +4,7 @@ class Group < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
   validates :user, presence: true
+  validates :activity, presence: true
   validates :group_category, presence: true
 
 end
