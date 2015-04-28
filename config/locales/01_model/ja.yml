@@ -11,6 +11,7 @@ ja:
           first_question: 質問・要望など
         user_detail:
           name_ja: 名前
+          name_ja_hint: テスト
           name_en: Name
           department: 所属
           grade: 学年

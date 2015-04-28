@@ -1,0 +1,6 @@
+ja:
+  user_details:
+    form:
+      hint_name_ja: 例) 技大 太郎
+      hint_name_en: 半角英字のみ 例) Tarou Gidai
+      hint_tel: 半角の数字とハイフンのみ(XXX-XXXX-XXXX or XXXX-XX-XXXX), 緊急時の連絡先に使用します. 連絡可能な番号をご登録ください.

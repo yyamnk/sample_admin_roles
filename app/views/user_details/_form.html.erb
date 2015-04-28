@@ -1,14 +1,20 @@
 <%= simple_form_for @user_detail, :html => { :class => 'form-horizontal' } do |f| %>
   <%= f.hidden_field :user_id, value: @user_detail[:user_id] %>
-  <%= f.input :name_ja %>
+  <%= f.input :name_ja,
+    hint: t(".hint_name_ja")
+    %>
   <%= error_span(@user_detail[:name_ja]) %>
-  <%= f.input :name_en %>
+  <%= f.input :name_en,
+    hint: t(".hint_name_en")
+  %>
   <%= error_span(@user_detail[:name_en]) %>
   <%= f.association :department, label_method: :name_ja %>
   <%= error_span(@user_detail[:department]) %>
   <%= f.association :grade, label_method: :name %>
   <%= error_span(@user_detail[:grade]) %>
-  <%= f.input :tel %>
+  <%= f.input :tel,
+    hint: t(".hint_tel")
+  %>
   <%= error_span(@user_detail[:tel]) %>
 
   <%= f.button :submit, :class => 'btn-primary' %>
