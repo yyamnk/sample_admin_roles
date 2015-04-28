@@ -2807,3 +2807,7 @@ Abilityに追記.
 これまでは`app/views/welcome/index.html.erb`で条件分岐していた.
 これを`app/controllers/welcome_controller.rb`で分離し,
 ユーザ情報が未登録のユーザには`app/views/welcome/regist_user_detail.html.erb`を表示する
+
+# ユーザ詳細をナビゲーションバーからアクセスできるように変更
+
+`app/views/layouts/application.html.erb`で要素を追加

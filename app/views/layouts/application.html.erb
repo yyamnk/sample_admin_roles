@@ -48,7 +48,15 @@
         <a class="navbar-brand" href="#">SampleAdminRoles</a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Dashboard", "/welcome/index"  %></li>
+            <li><%= link_to "Dashboard", "/welcome/index", :class => 'btn' %></li>
+            <li>
+              <% if user_signed_in? %>
+                <% @user_detail = UserDetail.find_by(user_id: current_user.id) %>
+                <% if @user_detail.present? %>
+                  <%= link_to "User info", user_detail_path(@user_detail) %>
+                <% end %>
+              <% end %>
+            </li>
             <li>
               <% if user_signed_in? %>
                 <%= link_to "Log out", destroy_user_session_path, :method => :delete  %>
