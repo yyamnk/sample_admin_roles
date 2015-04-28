@@ -30,3 +30,7 @@ ja:
               confirmation: "が一致しません"
             confirmation_token:
               invalid: "が一致しません"
+        user_detail:
+          attributes:
+            tel:
+              invalid: "不正な電話番号です."
