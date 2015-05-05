@@ -14,5 +14,7 @@ ja:
           name_ja_hint: テスト
           name_en: Name
           department: 所属
+          department_name_ja: 所属
           grade: 学年
+          grade_name: 学年
           tel: 電話番号
