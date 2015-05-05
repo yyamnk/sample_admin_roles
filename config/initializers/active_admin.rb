@@ -201,6 +201,13 @@ ActiveAdmin.setup do |config|
   #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
   #     end
   #   end
+    config.namespace :admin do |admin|
+      admin.build_menu :utility_navigation do |menu|
+        menu.add label: "非管理者ページ", url: "/welcome/index", html_options: { target: :blank }
+        admin.add_current_user_to_menu  menu
+        admin.add_logout_button_to_menu menu
+      end
+    end
 
   # == Download Links
   #

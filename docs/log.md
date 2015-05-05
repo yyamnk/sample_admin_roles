@@ -2840,4 +2840,6 @@ deviseのチュートリアルで独自コントローラを実装した時,
 [ココ](http://stackoverflow.com/questions/21446631/changed-devise-mailer-template-path-now-devise-invitables-e-mail-subject-lines)
 でやる.
 
+# ActiveAdminのナビゲーションバーに非管理者ページへのリンクを貼る
 
+[参考](http://activeadmin.info/docs/1-general-configuration.html#utility-navigation)
