@@ -35,6 +35,8 @@
   </tbody>
 </table>
 
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              welcome_index_path, :class => 'btn btn-default'  %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_group_path,
             :class => 'btn btn-primary' %>
